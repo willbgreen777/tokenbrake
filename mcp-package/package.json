@@ -1,7 +1,7 @@
 {
   "name": "tokenbrake-mcp",
   "version": "1.0.0",
-  "mcpName": "io.github.selflabbs/tokenbrake",
+  "mcpName": "io.github.willbgreen777/tokenbrake",
   "description": "MCP server for TokenBrake — let an AI agent read its own API spend and hard-stop its own runaway bill at your budget.",
   "type": "module",
   "bin": {
@@ -30,11 +30,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/selflabbs/tokenbrake-mcp.git"
+    "url": "git+https://github.com/willbgreen777/tokenbrake.git"
   },
   "homepage": "https://tokenbrake.com",
   "bugs": {
-    "url": "https://github.com/selflabbs/tokenbrake-mcp/issues"
+    "url": "https://github.com/willbgreen777/tokenbrake/issues"
   },
   "author": "Northjule",
   "license": "MIT"

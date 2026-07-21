@@ -1,9 +1,9 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.selflabbs/tokenbrake",
+  "name": "io.github.willbgreen777/tokenbrake",
   "description": "Let an AI agent read its own API spend and hard-stop its own runaway bill at your budget.",
   "repository": {
-    "url": "https://github.com/selflabbs/tokenbrake-mcp",
+    "url": "https://github.com/willbgreen777/tokenbrake",
     "source": "github"
   },
   "version": "1.0.0",
