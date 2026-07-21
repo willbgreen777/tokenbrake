@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>How Much Does an AI Agent Actually Cost? (2026 Guide)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="What an AI agent really costs to run in 2026 — why agents cost 10–100× a single chat call, the hidden token multipliers (tool loops, retries, context bloat, thinking tokens), worked examples, and how to keep the bill under control.">
+<meta property="og:title" content="How Much Does an AI Agent Actually Cost?">
+<meta property="og:description" content="Why AI agents cost far more than a single API call — the token multipliers, worked math, and how to keep the bill in check.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://tokenbrake.com/how-much-does-an-ai-agent-cost">
+<style>
+  :root{--bg:#0c0d10;--panel:#15171c;--edge:#262a33;--ink:#e8eaf0;--dim:#8b93a3;--amber:#f6ad55;--teal:#4fd1c5}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:730px;margin:0 auto;padding:0 22px 70px}
+  a{color:var(--teal)} .nav{display:flex;justify-content:space-between;padding:20px 0}
+  .logo{font-weight:800;font-size:19px}.logo b{color:var(--amber)}
+  h1{font-size:34px;line-height:1.18;margin:24px 0 10px;letter-spacing:-.4px}
+  .meta{color:var(--dim);font-size:14px;margin-bottom:24px}
+  h2{font-size:23px;margin:36px 0 10px;letter-spacing:-.2px}
+  h3{font-size:17px;margin:22px 0 6px;color:var(--amber)}
+  p{margin:14px 0;color:#d3d8e2} li{margin:8px 0;color:#d3d8e2}
+  ul,ol{margin:12px 0 12px 22px}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--edge)}
+  th{color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+  td.n{font-family:ui-monospace,Menlo,monospace;color:var(--ink)}
+  .callout{background:var(--panel);border:1px solid var(--edge);border-left:4px solid var(--amber);border-radius:0 10px 10px 0;padding:16px 20px;margin:22px 0}
+  .cta{display:block;background:var(--panel);border:1px solid var(--amber);border-radius:14px;padding:22px;margin:32px 0;text-align:center}
+  .cta a{display:inline-block;background:var(--amber);color:#181206;font-weight:800;padding:12px 22px;border-radius:10px;text-decoration:none;margin-top:10px}
+  code{background:#08090c;border:1px solid var(--edge);border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--teal)}
+  .rel{background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:14px 18px;margin:26px 0;font-size:14.5px}
+  .rel a{margin-right:14px}
+  .toc{background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:14px 18px;margin:8px 0 8px;font-size:14.5px}
+  footer{color:var(--dim);font-size:13px;border-top:1px solid var(--edge);padding-top:22px;margin-top:40px}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"How Much Does an AI Agent Actually Cost?","description":"Why AI agents cost 10-100x a single chat call: the token multipliers (tool loops, retries, context bloat, thinking tokens), worked examples across models, and how to keep the bill under control.","mainEntityOfPage":"https://tokenbrake.com/how-much-does-an-ai-agent-cost","author":{"@type":"Organization","name":"Akkad Empires"},"publisher":{"@type":"Organization","name":"TokenBrake","url":"https://tokenbrake.com"}}
+</script>
+</head>
+<body><div class="wrap">
+<nav class="nav"><div class="logo"><a href="/" style="color:inherit">TOKEN<b>BRAKE</b></a></div><a href="/guides">← all guides</a></nav>
+
+<h1>How Much Does an AI Agent Actually Cost?</h1>
+<div class="meta">A 2026 guide to what agents really cost to run — and why the number is bigger than the price sheet suggests.</div>
+
+<p>Everyone quotes AI cost as a per-token price: "GPT-4o is $2.50 per million input tokens." That number is real, and also almost useless for budgeting an <em>agent</em>. A single chat message is one API call. An agent completing a task is often <strong>dozens</strong> of calls — reading tools, retrying, re-reading a growing context, thinking step by step. The per-token price barely moved; your bill moved 50×. This is why the first real API invoice shocks people.</p>
+
+<div class="toc"><b>In this guide:</b> the real cost formula · why agents multiply it · a worked example · the hidden cost drivers · the runaway risk · how to keep it under control.</div>
+
+<h2>The base formula</h2>
+<p>Every LLM call costs: <code>(input tokens × input rate) + (output tokens × output rate)</code>, priced per million tokens. A rough sense of the spread in 2026:</p>
+<table>
+  <tr><th>Model</th><th>Input /1M</th><th>Output /1M</th></tr>
+  <tr><td>GPT-4o</td><td class="n">$2.50</td><td class="n">$10.00</td></tr>
+  <tr><td>Claude Sonnet 4</td><td class="n">$3.00</td><td class="n">$15.00</td></tr>
+  <tr><td>Gemini 2.5 Pro</td><td class="n">$1.25</td><td class="n">$10.00</td></tr>
+  <tr><td>Grok 4.5</td><td class="n">$2.00</td><td class="n">$6.00</td></tr>
+  <tr><td>GPT-4o mini</td><td class="n">$0.15</td><td class="n">$0.60</td></tr>
+  <tr><td>DeepSeek V4 Flash</td><td class="n">$0.14</td><td class="n">$0.28</td></tr>
+</table>
+<p>One modest chat call — say 1,500 input and 500 output tokens — on GPT-4o costs about <strong>$0.0088</strong>. Feels like nothing. That feeling is the trap.</p>
+
+<h2>Why an agent multiplies that number</h2>
+<p>An agent doesn't make one call per task. It loops. A single "handle this support ticket" or "research this and write it up" task typically fans out into many model calls:</p>
+<ul>
+  <li><strong>Tool-use loops.</strong> The model calls a tool, reads the result, decides the next step, calls another — each round trip is a fresh API call carrying the whole conversation so far.</li>
+  <li><strong>Growing context.</strong> Every step re-sends the accumulated history. By step 10, each call's input might be 10× the size of step 1. Input tokens balloon.</li>
+  <li><strong>Thinking / reasoning tokens.</strong> Reasoning models generate hidden "thinking" tokens that <em>bill as output</em> — often several times the visible answer.</li>
+  <li><strong>Retries and self-correction.</strong> Failed tool calls, malformed JSON, "let me try again" — each retry is another paid call.</li>
+  <li><strong>Multi-agent setups.</strong> A planner agent, a worker agent, a critic agent — three models discussing one task triples the calls.</li>
+</ul>
+<div class="callout">Rule of thumb: a real agent task costs <strong>10× to 100× a single chat call</strong>. The per-token price didn't change — the number of tokens did, because the agent kept re-reading its own growing context and thinking out loud.</div>
+
+<h2>A worked example</h2>
+<p>Say one agent task = 20 model calls, and because context grows, the calls average 8,000 input + 1,200 output tokens on Claude Sonnet 4 ($3 / $15 per 1M):</p>
+<ul>
+  <li>Per call: (8,000 × $3 + 1,200 × $15) / 1,000,000 = <strong>$0.042</strong></li>
+  <li>Per task (20 calls): <strong>~$0.84</strong></li>
+  <li>1,000 tasks/day: <strong>~$840/day</strong> → <strong>~$25,000/month</strong></li>
+</ul>
+<p>That's from a task that "only" costs 84 cents. Change the model, the call count, or the context size and the monthly number swings by 10× in either direction — which is exactly why guessing doesn't work. <a href="/calculator">Run your own numbers in the calculator →</a></p>
+
+<h2>The hidden cost drivers (and the easy wins)</h2>
+<h3>Context bloat</h3>
+<p>The single biggest lever. If every step re-sends the full history, input tokens dominate the bill. Trim history, summarize old turns, and use <strong>prompt caching</strong> where the provider supports it — cached input can be 10× cheaper.</p>
+<h3>Wrong model for the job</h3>
+<p>Using a flagship model for routing, classification, or simple tool selection is pure waste. A mini/flash model at 5–20× lower cost handles most sub-steps fine; save the expensive model for the hard reasoning.</p>
+<h3>Verbose output and unbounded thinking</h3>
+<p>Output is 3–5× the price of input on most models, and thinking tokens bill as output. Cap max tokens, and dial reasoning effort down when a task doesn't need it.</p>
+<h3>Unbounded loops</h3>
+<p>An agent with no step limit can loop forever on a task it can't finish — burning money on every turn. Always cap the number of steps.</p>
+<p>A lot of runaway loops start as a <em>design</em> problem rather than a budget one: an agent with no defined scope or escalation rule will keep improvising instead of stopping and handing off. Northbench's guide to <a href="https://northbench-site.vercel.app/how-to-build-an-ai-employee" target="_blank" rel="noopener">building an AI employee that actually works</a> covers that structure — scope, SOPs, escalation, and a definition of done.</p>
+
+<h2>The part that actually hurts: the runaway</h2>
+<p>Everything above is the <em>expected</em> bill. The scary bill is the <strong>unexpected</strong> one: a retry storm, an infinite tool loop, a prompt-injection that hijacks your agent, or a leaked key someone else is now spending. Any of these can run 20–100× your normal rate for hours before you notice — and by the time a monthly invoice or a delayed provider limit reacts, the money is gone.</p>
+<p>This is the gap every provider's native control leaves open. Their limits are delayed (OpenAI up to 24 hours), account-wide (one runaway takes everything down), or monthly — none of them stop <em>one</em> agent's next call in real time. We break that down provider by provider:</p>
+<div class="rel"><b>Provider guides:</b>
+  <a href="/stop-openai-api-bill-shock">OpenAI</a>
+  <a href="/cap-your-claude-api-bill">Claude</a>
+  <a href="/cap-your-gemini-api-bill">Gemini</a>
+  <a href="/cap-your-grok-api-bill">Grok</a>
+  <a href="/cap-your-deepseek-api-bill">DeepSeek</a>
+</div>
+
+<h2>How to keep an agent's cost under control</h2>
+<ol>
+  <li><strong>Estimate before you ship.</strong> Multiply realistic call-count × context size × model rate. If the number scares you, fix the design before it's a bill. (<a href="/calculator">calculator</a>)</li>
+  <li><strong>Meter per agent, in real time.</strong> Know what each bot, script, and job is spending as it happens — not at month's end.</li>
+  <li><strong>Set a hard cap per agent.</strong> A real-time budget that refuses the next call when hit is the only thing that stops a runaway before it lands.</li>
+  <li><strong>Trim context and cache.</strong> The cheapest token is the one you don't re-send.</li>
+  <li><strong>Right-size the model per step.</strong> Cheap model for the easy parts, expensive model only for the hard reasoning.</li>
+  <li><strong>Alert at your own thresholds.</strong> Get warned at 80%, 100%, or 125% — your call, not a fixed number.</li>
+</ol>
+
+<div class="cta">
+  <strong>TokenBrake does 2, 3, and 6 for you.</strong>
+  <p style="color:var(--dim);margin:8px 0 0">A self-hosted proxy that meters every AI call in real time, per agent, and hard-stops a runaway at the budget you set — across OpenAI, Claude, Gemini, Grok, Groq, DeepSeek, Mistral, and OpenRouter. Your keys and prompts never leave your server. One line to install.</p>
+  <a href="/pricing">Cap your agent's bill — from $99/yr →</a>
+</div>
+
+<h2>The bottom line</h2>
+<p>An AI agent's cost isn't the per-token price — it's that price multiplied by every call the agent makes re-reading its own growing context and thinking out loud. Budget for the multiplier, trim what you can, and put a real-time per-agent cap in front of the runaway you can't predict. The math is manageable once you can see it.</p>
+
+<div class="rel"><b>Keep reading:</b>
+  <a href="/calculator">AI cost calculator</a>
+  <a href="/guides">All cost guides</a>
+  <a href="/faq">FAQ</a>
+  <a href="/docs">How TokenBrake works</a>
+</div>
+
+<footer>TokenBrake — a circuit breaker for your AI bill · <a href="/">tokenbrake.com</a> · an Akkad Empires product</footer>
+</div></body></html>

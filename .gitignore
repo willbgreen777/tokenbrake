@@ -1,0 +1,33 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# SECRETS — never commit. The first entry is the one that actually matters:
+# .license-key.pem is the Ed25519 PRIVATE key that mints every TokenBrake
+# licence. If it ever lands in a repo, anyone who reads it can issue unlimited
+# free licences forever and the whole paid product is void. There is no undo —
+# git history keeps it even after deletion.
+# ─────────────────────────────────────────────────────────────────────────────
+.license-key.pem
+*.pem
+*.key
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel/
+.vercel
+
+# Local databases and ledgers (customer spend data — not ours to publish)
+*.db
+*.sqlite
+.tokenbrake/
+.tokenbrake-server.db
+.tokenbrake-trial
+
+# Build artefacts
+node_modules/
+*.tgz
+mcp-package/*.tgz
+
+# OS noise
+.DS_Store
+Thumbs.db

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>How to Put a Hard Limit on Your OpenAI API Bill (2026 Guide)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="OpenAI's built-in spending limit is delayed up to 24 hours and applies to your whole account. Here's how to actually cap your OpenAI or Anthropic API bill in real time — before a runaway loop or leaked key costs you thousands.">
+<meta property="og:title" content="How to Put a Hard Limit on Your OpenAI API Bill">
+<meta property="og:description" content="Why OpenAI's own spend limit isn't enough, and how to truly cap your AI API costs in real time.">
+<link rel="canonical" href="https://tokenbrake.com/stop-openai-api-bill-shock">
+<style>
+  :root{--bg:#0c0d10;--panel:#15171c;--edge:#262a33;--ink:#e8eaf0;--dim:#8b93a3;--amber:#f6ad55;--teal:#4fd1c5}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px 70px}
+  a{color:var(--teal)} .nav{display:flex;justify-content:space-between;padding:20px 0}
+  .logo{font-weight:800;font-size:19px}.logo b{color:var(--amber)}
+  h1{font-size:34px;line-height:1.2;margin:24px 0 10px;letter-spacing:-.4px}
+  .meta{color:var(--dim);font-size:14px;margin-bottom:24px}
+  h2{font-size:22px;margin:34px 0 10px}
+  p{margin:14px 0;color:#d3d8e2} li{margin:8px 0;color:#d3d8e2}
+  ul,ol{margin:12px 0 12px 22px}
+  .callout{background:var(--panel);border:1px solid var(--edge);border-left:4px solid var(--amber);border-radius:0 10px 10px 0;padding:16px 20px;margin:22px 0}
+  .cta{display:block;background:var(--panel);border:1px solid var(--amber);border-radius:14px;padding:22px;margin:32px 0;text-align:center}
+  .cta a{display:inline-block;background:var(--amber);color:#181206;font-weight:800;padding:12px 22px;border-radius:10px;text-decoration:none;margin-top:10px}
+  code{background:#08090c;border:1px solid var(--edge);border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--teal)}
+  footer{color:var(--dim);font-size:13px;border-top:1px solid var(--edge);padding-top:22px;margin-top:40px}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"How to Put a Hard Limit on Your OpenAI API Bill","description":"Why OpenAI's built-in usage limit isn't enough — it's delayed up to 24 hours and account-wide — and the approaches that actually stop a runaway call in real time.","mainEntityOfPage":"https://tokenbrake.com/stop-openai-api-bill-shock","author":{"@type":"Organization","name":"Akkad Empires"},"publisher":{"@type":"Organization","name":"TokenBrake","url":"https://tokenbrake.com"}}
+</script>
+</head>
+<body><div class="wrap">
+<nav class="nav"><div class="logo"><a href="/" style="color:inherit;text-decoration:none">TOKEN<b>BRAKE</b></a></div><a href="/guides">← all guides</a></nav>
+
+<h1>How to Put a Hard Limit on Your OpenAI API Bill</h1>
+<div class="meta">A practical 2026 guide to capping OpenAI and Anthropic API spend — before a bug does it for you.</div>
+
+<p>If you build on the OpenAI or Anthropic API, you've felt the fear: a retry loop, a runaway agent, or a leaked key quietly turning a $20 month into a four-figure invoice you don't see until it's too late. The obvious question — <em>"can't I just set a hard spending limit?"</em> — has a frustrating answer.</p>
+
+<h2>Why OpenAI's built-in limit isn't enough</h2>
+<p>OpenAI does offer a monthly usage limit. It's a useful backstop, but it has two real gaps:</p>
+<ul>
+  <li><strong>It's delayed.</strong> Usage can take up to <strong>24 hours</strong> to register, so a runaway process can burn thousands before the limit ever trips.</li>
+  <li><strong>It's account-wide.</strong> One limit covers your entire account — not per project, per feature, per agent, or per customer. You can't protect one workload without throttling all of them.</li>
+</ul>
+<div class="callout">The uncomfortable truth: by the time a delayed, account-wide limit reacts, the damage is usually done. Real protection has to happen <strong>in real time, at the point of the call.</strong></div>
+
+<h2>The approaches that actually work</h2>
+<ol>
+  <li><strong>Set OpenAI's own limit anyway.</strong> It's a free backstop — turn it on. Just don't rely on it as your only line of defense.</li>
+  <li><strong>Track spend in your own code.</strong> Count tokens on every call and compare against a budget. Accurate, but you have to build and maintain it, handle every model's pricing (including cached tokens), and it can't stop a call it isn't wrapping.</li>
+  <li><strong>Route calls through a metering proxy.</strong> Point your API base URL at a small proxy that counts every call in real time and <strong>refuses to forward</strong> once you hit your budget. This is the only approach that can actually <em>stop</em> the next call before it's charged.</li>
+</ol>
+
+<h2>What a real spending cap needs to do</h2>
+<ul>
+  <li><strong>Meter in real time</strong> — not on a 24-hour delay.</li>
+  <li><strong>Hard-stop at the budget</strong> — return an error instead of forwarding the call, so a loop can't blow past it.</li>
+  <li><strong>Price accurately</strong> — including prompt-caching, which OpenAI and Anthropic report differently and which is easy to mis-bill.</li>
+  <li><strong>Never store your key or prompts</strong> — a cost tool should reduce risk, not add a new place your secrets can leak.</li>
+  <li><strong>Offer a soft mode too</strong> — sometimes the spend is a profit center and you <em>want</em> to run over; you should be warned, not blocked.</li>
+</ul>
+
+<div class="cta">
+  <strong>TokenBrake does exactly this.</strong>
+  <p style="color:var(--dim);margin:8px 0 0">A drop-in proxy that meters your OpenAI/Anthropic spend in real time and hard-stops a runaway bill at your budget — plus it shows what your <em>local</em> models cost in electricity. Runs on your machine, never stores your keys. Free beta.</p>
+  <a href="/get">Get TokenBrake — free →</a>
+</div>
+
+<h2>The bottom line</h2>
+<p>OpenAI's limit is a smoke detector on a 24-hour delay. If a runaway bill would actually hurt, you need a real-time cap that stops the call at the source. Set OpenAI's limit as a backstop, then put a real brake in front of it.</p>
+
+<div style="background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:14px 18px;margin:26px 0;font-size:14.5px"><b>Keep reading:</b>
+  <a href="/calculator" style="margin-right:14px">AI cost calculator</a>
+  <a href="/cap-your-claude-api-bill" style="margin-right:14px">Cap your Claude bill</a>
+  <a href="/cap-your-gemini-api-bill" style="margin-right:14px">Cap your Gemini bill</a>
+  <a href="/docs">How TokenBrake works</a>
+</div>
+
+<footer>TokenBrake — a circuit breaker for your AI bill · <a href="/">tokenbrake.com</a> · an Akkad Empires product</footer>
+</div></body></html>

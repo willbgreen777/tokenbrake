@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>How to Cap Your Mistral API Bill (2026 Guide)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Mistral's La Plateforme gives you real cost controls — organization and per-workspace monthly spend caps. Here's what they do, where they fall short for multi-agent teams, and how to add a real-time per-agent hard stop.">
+<meta property="og:title" content="How to Cap Your Mistral API Bill">
+<meta property="og:description" content="What Mistral's org and workspace spend caps do, and how to cap your bill per-agent in real time.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://tokenbrake.com/cap-your-mistral-api-bill">
+<style>
+  :root{--bg:#0c0d10;--panel:#15171c;--edge:#262a33;--ink:#e8eaf0;--dim:#8b93a3;--amber:#f6ad55;--teal:#4fd1c5}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px 70px}
+  a{color:var(--teal)} .nav{display:flex;justify-content:space-between;padding:20px 0}
+  .logo{font-weight:800;font-size:19px}.logo b{color:var(--amber)}
+  h1{font-size:33px;line-height:1.2;margin:24px 0 10px;letter-spacing:-.4px}
+  .meta{color:var(--dim);font-size:14px;margin-bottom:24px}
+  h2{font-size:22px;margin:34px 0 10px}
+  p{margin:14px 0;color:#d3d8e2} li{margin:8px 0;color:#d3d8e2}
+  ul,ol{margin:12px 0 12px 22px}
+  .callout{background:var(--panel);border:1px solid var(--edge);border-left:4px solid var(--amber);border-radius:0 10px 10px 0;padding:16px 20px;margin:22px 0}
+  .cta{display:block;background:var(--panel);border:1px solid var(--amber);border-radius:14px;padding:22px;margin:32px 0;text-align:center}
+  .cta a{display:inline-block;background:var(--amber);color:#181206;font-weight:800;padding:12px 22px;border-radius:10px;text-decoration:none;margin-top:10px}
+  code{background:#08090c;border:1px solid var(--edge);border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--teal)}
+  .rel{background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:14px 18px;margin:26px 0;font-size:14.5px}
+  .rel a{margin-right:14px}
+  footer{color:var(--dim);font-size:13px;border-top:1px solid var(--edge);padding-top:22px;margin-top:40px}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"How to Cap Your Mistral API Bill","description":"What Mistral La Plateforme's organization and per-workspace monthly spend caps do, where they fall short for multi-agent teams, and how to add a real-time per-agent hard stop.","mainEntityOfPage":"https://tokenbrake.com/cap-your-mistral-api-bill","author":{"@type":"Organization","name":"Akkad Empires"},"publisher":{"@type":"Organization","name":"TokenBrake","url":"https://tokenbrake.com"}}
+</script>
+</head>
+<body><div class="wrap">
+<nav class="nav"><div class="logo"><a href="/" style="color:inherit">TOKEN<b>BRAKE</b></a></div><a href="/guides">← all guides</a></nav>
+
+<h1>How to Cap Your Mistral API Bill</h1>
+<div class="meta">A practical 2026 guide — Mistral's org and workspace spend caps, and the gap they leave for multi-agent teams.</div>
+
+<p>Mistral's La Plateforme is one of the better-equipped platforms for cost control — it gives you not just an account-level cap but per-workspace budgets too. If you're worried a runaway agent could quietly run up a Mistral bill, you have real levers to pull. The nuance, as always, is what those levers can and can't stop.</p>
+
+<h2>What Mistral's native controls do</h2>
+<p>From the La Plateforme Admin Console, you get two levels of spend cap:</p>
+<ul>
+  <li><strong>An organization-level monthly usage cap.</strong> Set a monthly limit on API (and Vibe) consumption for the whole org. Reach it and API access can be suspended until the next month begins or an admin raises it.</li>
+  <li><strong>Per-workspace spending limits.</strong> Cap consumption for a single Workspace — a clean way to model team budgets, project budgets, or environment boundaries. A workspace cap can't exceed the org cap.</li>
+  <li><strong>A usage dashboard.</strong> See org usage for the billing period, spot heavy areas, and adjust caps.</li>
+</ul>
+<p>Turn these on. Per-workspace budgets in particular are more than most providers give you.</p>
+
+<h2>Where the native caps fall short</h2>
+<ul>
+  <li><strong>They're monthly.</strong> Caps are enforced over the billing period; hit one and you're suspended until the next month (or until an admin raises it). A fast loop has a whole month of runway before the cap even matters.</li>
+  <li><strong>Workspace, not per-agent.</strong> If you run five bots inside one workspace, the workspace cap sees them as one pool — one runaway drains the shared budget and starves the others. To isolate each agent you'd have to spin up a separate workspace per agent, which gets heavy fast.</li>
+  <li><strong>Hitting the cap suspends access.</strong> When a workload hits its cap, its API access stops until the month rolls over or an admin intervenes — and raising the limit to recover production also gives the runaway more room.</li>
+  <li><strong>The org cap mixes API and Vibe.</strong> The organization limit covers API <em>and</em> Vibe consumption together, so chat-product usage and your production API share one ceiling.</li>
+  <li><strong>It's not real-time per-call.</strong> A monthly cap can't refuse the single next call the instant an agent crosses your number.</li>
+</ul>
+<div class="callout">Mistral protects the <strong>org</strong> and the <strong>workspace</strong> — on a <strong>monthly</strong> cycle. What it doesn't do is give one <strong>agent</strong> inside a workspace its own hard stop at <strong>your</strong> number, in real time, without spinning up a workspace per bot.</div>
+
+<h2>Adding a real-time, per-agent cap</h2>
+<p>Point your Mistral base URL at a metering proxy that counts every call as it happens and refuses to forward once a given agent hits its budget. Keep Mistral's org and workspace caps as backstops, and add:</p>
+<ul>
+  <li><strong>Per-agent budgets at your number</strong> — each bot, script, or project gets its own cap with one header, no new workspace required.</li>
+  <li><strong>An immediate hard stop</strong> — the next call is refused at the source, not at month's end.</li>
+  <li><strong>Your own alert thresholds and a soft mode</strong> — be warned at 80/100/125%, or let a profitable job run over on purpose.</li>
+</ul>
+
+<div class="cta">
+  <strong>TokenBrake is that proxy.</strong>
+  <p style="color:var(--dim);margin:8px 0 0">Point your Mistral (or OpenAI, Claude, Gemini, Grok, and more) base URL at it and it meters every call in real time, per agent, and hard-stops a runaway at your budget. Self-hosted — your keys and prompts never leave your server. One line to install.</p>
+  <a href="/pricing">Cap your Mistral bill — $99/yr →</a>
+</div>
+
+<h2>The bottom line</h2>
+<p>Mistral's org and per-workspace caps are among the better native controls out there — set them. But they cap by the month, and per-workspace isn't per-agent unless you split every bot into its own workspace. For per-agent control at your own number, in real time, put a circuit breaker in front of it.</p>
+
+<div class="rel"><b>Keep reading:</b>
+  <a href="/how-much-does-an-ai-agent-cost">What agents cost</a>
+  <a href="/calculator">Cost calculator</a>
+  <a href="/cap-your-groq-api-bill">Cap your Groq bill</a>
+  <a href="/cap-your-claude-api-bill">Cap your Claude bill</a>
+</div>
+
+<footer>TokenBrake — a circuit breaker for your AI bill · <a href="/">tokenbrake.com</a> · an Akkad Empires product</footer>
+</div></body></html>

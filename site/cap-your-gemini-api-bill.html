@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>How to Cap Your Google Gemini API Bill (2026 Guide)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Gemini API now has a mandatory monthly spend cap per billing account — but it's account-wide, allows up to 10 minutes of overage, and pauses every workload at once. Here's what it does and how to add a real-time, per-agent cap.">
+<meta property="og:title" content="How to Cap Your Google Gemini API Bill">
+<meta property="og:description" content="What Gemini's new mandatory spend cap does, its gaps, and how to cap per-agent in real time.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://tokenbrake.com/cap-your-gemini-api-bill">
+<style>
+  :root{--bg:#0c0d10;--panel:#15171c;--edge:#262a33;--ink:#e8eaf0;--dim:#8b93a3;--amber:#f6ad55;--teal:#4fd1c5}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px 70px}
+  a{color:var(--teal)} .nav{display:flex;justify-content:space-between;padding:20px 0}
+  .logo{font-weight:800;font-size:19px}.logo b{color:var(--amber)}
+  h1{font-size:33px;line-height:1.2;margin:24px 0 10px;letter-spacing:-.4px}
+  .meta{color:var(--dim);font-size:14px;margin-bottom:24px}
+  h2{font-size:22px;margin:34px 0 10px}
+  p{margin:14px 0;color:#d3d8e2} li{margin:8px 0;color:#d3d8e2}
+  ul,ol{margin:12px 0 12px 22px}
+  .callout{background:var(--panel);border:1px solid var(--edge);border-left:4px solid var(--amber);border-radius:0 10px 10px 0;padding:16px 20px;margin:22px 0}
+  .cta{display:block;background:var(--panel);border:1px solid var(--amber);border-radius:14px;padding:22px;margin:32px 0;text-align:center}
+  .cta a{display:inline-block;background:var(--amber);color:#181206;font-weight:800;padding:12px 22px;border-radius:10px;text-decoration:none;margin-top:10px}
+  code{background:#08090c;border:1px solid var(--edge);border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--teal)}
+  .rel{background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:14px 18px;margin:26px 0;font-size:14.5px}
+  .rel a{margin-right:14px}
+  footer{color:var(--dim);font-size:13px;border-top:1px solid var(--edge);padding-top:22px;margin-top:40px}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"How to Cap Your Google Gemini API Bill","description":"Gemini's new mandatory monthly spend cap, what it protects, why it's account-wide and lets 10 minutes of overage through, and how to add a real-time per-agent cap.","mainEntityOfPage":"https://tokenbrake.com/cap-your-gemini-api-bill","author":{"@type":"Organization","name":"Akkad Empires"},"publisher":{"@type":"Organization","name":"TokenBrake","url":"https://tokenbrake.com"}}
+</script>
+</head>
+<body><div class="wrap">
+<nav class="nav"><div class="logo"><a href="/" style="color:inherit">TOKEN<b>BRAKE</b></a></div><a href="/guides">← all guides</a></nav>
+
+<h1>How to Cap Your Google Gemini API Bill</h1>
+<div class="meta">A practical 2026 guide — Gemini's new mandatory spend cap, what it protects, and the gap it leaves.</div>
+
+<p>Gemini's cost controls changed for the better in 2026, and there's some good news up front: unlike a plain budget alert, the Gemini API now enforces a real spending cap. But the details matter — because the way it enforces can take down all of your Gemini workloads at once, and it still lets some overage through.</p>
+
+<h2>The old trap: Cloud budgets only alert</h2>
+<p>For years the standard advice was "set a budget in Google Cloud Billing." The catch that burns people: a traditional Cloud <strong>budget is an alert, not a brake</strong>. It emails you when you cross a threshold — it does not stop spending. Capping actually required wiring up Pub/Sub and a Cloud Function to disable billing, a drastic switch that tears down everything, not just the API.</p>
+
+<h2>What Gemini's mandatory spend cap does now</h2>
+<p>Since <strong>April 1, 2026</strong>, every Gemini API billing account has a <strong>mandatory monthly spend cap</strong> tied to its usage tier — roughly <strong>$250/month on Tier 1, $2,000 on Tier 2</strong>, and $20,000 to $100,000+ on Tier 3. This is real enforcement:</p>
+<ul>
+  <li><strong>It pauses traffic.</strong> Hit the cap and Gemini API requests on that billing account stop until the next billing cycle — your resources stay intact.</li>
+  <li><strong>It can't be disabled.</strong> The cap is always on, which is a genuine safety improvement over alert-only budgets.</li>
+</ul>
+<p>If you only run one Gemini workload and the tier cap happens to sit near your comfort level, that may be enough. Turn it on and know your tier.</p>
+
+<h2>Where it falls short</h2>
+<ul>
+  <li><strong>It's account-wide, not per-agent.</strong> The cap is per <em>billing account</em>. Hit it and <em>every</em> Gemini workload you run pauses together — the runaway experiment takes your production support bot down with it. There's no isolation between agents.</li>
+  <li><strong>It still lets overage through.</strong> Google's own guidance notes requests may keep processing for <strong>up to 10 minutes</strong> after you hit the cap — and you're responsible for those overages. A fast loop can do real damage in ten minutes.</li>
+  <li><strong>The cap is the tier, not your number.</strong> The enforced number is tied to your usage tier ($250 / $2,000 / …). If your actual comfort level is $40, the tier cap is a blunt instrument, not a dial.</li>
+  <li><strong>Plain budgets still only alert.</strong> If you lean on a classic Cloud Billing budget for control, it will notify you while the meter keeps running.</li>
+</ul>
+<div class="callout">Gemini's cap protects the <strong>whole billing account</strong> at a <strong>tier-sized</strong> number, with a <strong>10-minute</strong> tail. What it doesn't do is stop one specific <strong>agent</strong> at <strong>your</strong> dollar figure, <strong>immediately</strong>, without pausing everything else.</div>
+
+<h2>Adding a real-time, per-agent cap</h2>
+<p>Point your Gemini base URL at a metering proxy that counts every call as it happens and refuses to forward once a given agent hits its budget. You keep Gemini's mandatory cap as the account-wide backstop, and add:</p>
+<ul>
+  <li><strong>Per-agent budgets at your number</strong> — $40, $200, whatever you choose, tagged per agent so one workload can't sink the others.</li>
+  <li><strong>An immediate hard stop</strong> — the call is refused at the source, closing the 10-minute overage window.</li>
+  <li><strong>Your own alert thresholds and a soft mode</strong> — be warned at 80/100/125%, or let a profitable job run over on purpose.</li>
+</ul>
+
+<div class="cta">
+  <strong>TokenBrake is that proxy.</strong>
+  <p style="color:var(--dim);margin:8px 0 0">Point your Gemini (or OpenAI, Claude, Grok, and more) base URL at it and it meters every call in real time, per agent, and hard-stops a runaway at your budget. Self-hosted — your keys and prompts never leave your server. One line to install.</p>
+  <a href="/pricing">Cap your Gemini bill — $99/yr →</a>
+</div>
+
+<h2>The bottom line</h2>
+<p>Gemini's mandatory spend cap is a real improvement — know your tier and keep it on. But it's account-wide, tier-sized, and lets ten minutes of overage through. For per-agent control at your own number, in real time, put a circuit breaker in front of it.</p>
+
+<div class="rel"><b>Keep reading:</b>
+  <a href="/calculator">AI cost calculator</a>
+  <a href="/cap-your-claude-api-bill">Cap your Claude bill</a>
+  <a href="/stop-openai-api-bill-shock">Cap your OpenAI bill</a>
+  <a href="/docs">How TokenBrake works</a>
+</div>
+
+<footer>TokenBrake — a circuit breaker for your AI bill · <a href="/">tokenbrake.com</a> · an Akkad Empires product</footer>
+</div></body></html>

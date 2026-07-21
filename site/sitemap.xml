@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://tokenbrake.com/</loc><priority>1.0</priority></url>
+  <url><loc>https://tokenbrake.com/calculator</loc><priority>0.9</priority></url>
+  <url><loc>https://tokenbrake.com/pricing</loc><priority>0.9</priority></url>
+  <url><loc>https://tokenbrake.com/guides</loc><priority>0.8</priority></url>
+  <url><loc>https://tokenbrake.com/how-much-does-an-ai-agent-cost</loc><priority>0.8</priority></url>
+  <url><loc>https://tokenbrake.com/faq</loc><priority>0.8</priority></url>
+  <url><loc>https://tokenbrake.com/docs</loc><priority>0.8</priority></url>
+  <url><loc>https://tokenbrake.com/get</loc><priority>0.8</priority></url>
+  <url><loc>https://tokenbrake.com/cap-your-claude-api-bill</loc><priority>0.7</priority></url>
+  <url><loc>https://tokenbrake.com/cap-your-gemini-api-bill</loc><priority>0.7</priority></url>
+  <url><loc>https://tokenbrake.com/cap-your-grok-api-bill</loc><priority>0.7</priority></url>
+  <url><loc>https://tokenbrake.com/cap-your-deepseek-api-bill</loc><priority>0.7</priority></url>
+  <url><loc>https://tokenbrake.com/cap-your-groq-api-bill</loc><priority>0.7</priority></url>
+  <url><loc>https://tokenbrake.com/cap-your-mistral-api-bill</loc><priority>0.7</priority></url>
+  <url><loc>https://tokenbrake.com/stop-openai-api-bill-shock</loc><priority>0.7</priority></url>
+  <url><loc>https://tokenbrake.com/terms</loc><priority>0.3</priority></url>
+  <url><loc>https://tokenbrake.com/privacy</loc><priority>0.3</priority></url>
+</urlset>

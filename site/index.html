@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TokenBrake — see what your AI is really costing you, and stop the bleeding</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="You run several AIs at once — cloud ones burning API dollars, local ones burning electricity — and can't see any of it. TokenBrake shows every AI on your machine in one menu-bar glance, and hard-stops a runaway API bill before it happens.">
+<meta property="og:title" content="TokenBrake — a circuit breaker for your AI bill">
+<meta property="og:description" content="See every AI on your machine, in dollars and watts, in one tiny menu-bar widget. And cap a runaway API bill before it happens.">
+<meta property="og:type" content="website">
+<style>
+  :root{--bg:#0c0d10;--panel:#15171c;--edge:#262a33;--ink:#e8eaf0;--dim:#8b93a3;--amber:#f6ad55;--red:#fc6a5d;--teal:#4fd1c5;--green:#68d391}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+  a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+  .logo{font-weight:800;letter-spacing:.5px;font-size:19px} .logo b{color:var(--amber)}
+  .btn{display:inline-block;background:var(--amber);color:#181206;font-weight:800;padding:12px 22px;border-radius:10px;border:0;cursor:pointer;font-size:15px}
+  .btn:hover{text-decoration:none;filter:brightness(1.05)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--edge)}
+  header.hero{padding:52px 0 30px;text-align:center}
+  .kicker{color:var(--amber);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+  h1{font-size:44px;line-height:1.1;margin:16px auto 14px;max-width:720px;letter-spacing:-.5px}
+  h1 .b{color:var(--amber)} h1 .r{color:var(--red)}
+  .sub{font-size:19px;color:var(--dim);max-width:640px;margin:0 auto 26px}
+  .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .note{color:var(--dim);font-size:13px;margin-top:14px}
+  .mock{max-width:420px;margin:40px auto 0;background:var(--panel);border:1px solid var(--edge);border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.5);overflow:hidden;text-align:left}
+  .mock .bar{background:#0a0b0e;padding:9px 14px;font-family:ui-monospace,Menlo,monospace;font-size:14px;border-bottom:1px solid var(--edge);color:var(--amber);display:flex;justify-content:flex-end;gap:16px}
+  .mock .body{padding:14px 16px;font-size:14px}
+  .mock .h{color:var(--dim);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin:10px 0 6px}
+  .mock .row{display:flex;justify-content:space-between;padding:5px 0;font-family:ui-monospace,Menlo,monospace;font-size:13.5px}
+  .mock .row .cap{color:var(--red);font-weight:700}
+  .mock .teal{color:var(--teal)} .mock .amber{color:var(--amber)}
+  section{padding:44px 0;border-top:1px solid var(--edge)}
+  h2{font-size:28px;margin-bottom:8px;letter-spacing:-.3px}
+  .lead{color:var(--dim);font-size:17px;margin-bottom:24px;max-width:640px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:20px}
+  .card h3{font-size:18px;margin-bottom:6px} .card p{color:var(--dim);font-size:15px}
+  .card .tag{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .steps{display:grid;gap:14px}
+  .step{display:flex;gap:14px;align-items:flex-start}
+  .step .n{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--amber);color:#181206;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .step p{color:var(--dim);font-size:15px} .step b{color:var(--ink)}
+  code{background:#0a0b0e;border:1px solid var(--edge);border-radius:6px;padding:2px 7px;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--teal)}
+  .price{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:640px}
+  .plan{background:var(--panel);border:1px solid var(--edge);border-radius:14px;padding:24px}
+  .plan.hot{border-color:var(--amber)}
+  .plan .pn{font-weight:800;font-size:15px;letter-spacing:.05em;text-transform:uppercase;color:var(--amber)}
+  .plan .pp{font-size:34px;font-weight:800;margin:8px 0} .plan .pp span{font-size:15px;color:var(--dim);font-weight:500}
+  .plan ul{list-style:none;margin:12px 0 0;color:var(--dim);font-size:14.5px} .plan li{padding:4px 0;padding-left:22px;position:relative}
+  .plan li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:800}
+  .trust{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:14.5px;color:var(--dim)}
+  .trust b{color:var(--ink)}
+  footer{padding:34px 0;color:var(--dim);font-size:13px;text-align:center;border-top:1px solid var(--edge)}
+  @media(max-width:640px){h1{font-size:32px}.two,.price,.trust{grid-template-columns:1fr}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"TokenBrake","applicationCategory":"DeveloperApplication","operatingSystem":"Node.js 24+ (macOS, Linux, Windows)","url":"https://tokenbrake.com","description":"A circuit breaker for your AI API bill. Self-hosted proxy that meters every OpenAI, Anthropic, Gemini, Grok, Groq, DeepSeek, Mistral, and OpenRouter call in real time and hard-stops a runaway bill at your budget — per agent. Never stores your keys or prompts.","offers":[{"@type":"Offer","name":"Solo","price":"99","priceCurrency":"USD","description":"Up to 3 monitored agents, billed annually."},{"@type":"Offer","name":"Business","price":"490","priceCurrency":"USD","description":"Unlimited agents, billed annually."}],"publisher":{"@type":"Organization","name":"Akkad Empires","url":"https://tokenbrake.com"}}
+</script>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="nav">
+    <div class="logo">TOKEN<b>BRAKE</b></div>
+    <div style="display:flex;gap:14px;align-items:center"><a href="/guides">Guides</a><a href="/calculator">Calculator</a><a href="/pricing">Pricing</a><a class="btn ghost" href="/get">Start free trial</a></div>
+  </nav>
+
+  <header class="hero">
+    <div class="kicker">A circuit breaker for your AI bill</div>
+    <h1>Your AIs are burning money <span class="r">right now.</span> <span class="b">You can't see it.</span></h1>
+    <p class="sub">You've got a cloud model, a local model, an agent or two — all running in the background. Quick: what did they cost you today? Nobody knows. TokenBrake shows every AI on your machine in one menu-bar glance — and <b>hard-stops a runaway API bill before it happens.</b></p>
+    <div class="cta-row">
+      <a class="btn" href="/get">Try TokenBrake free for 14 days</a>
+      <a class="btn ghost" href="#how">See how it works</a>
+    </div>
+    <div class="note">Runs entirely on your Mac. Never stores your API keys or your prompts.</div>
+
+    <div class="mock" aria-label="menu bar widget preview">
+      <div class="bar"><span>🔥 $18.40</span></div>
+      <div class="body">
+        <div class="h">☁️ Cloud AI — real API dollars</div>
+        <div class="row"><span class="teal">my-gpt-agent</span><span>$14.80 / $15.00 <span class="cap">⛔ capped</span></span></div>
+        <div class="row"><span class="teal">grok-bot</span><span>$3.28 / $10.00</span></div>
+        <div class="h">⚡ Local AI — electricity + RAM</div>
+        <div class="row"><span class="amber">ollama · qwen3:8b</span><span>5.4 GB · ~$0.32/mo</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="how">
+    <h2>Two hidden costs. One place no one's ever shown them.</h2>
+    <p class="lead">There are two kinds of AI cost, and no tool on earth puts both in front of you.</p>
+    <div class="two">
+      <div class="card"><div class="tag" style="color:var(--teal)">☁️ Cloud</div><h3>Dollar-burners</h3><p>GPT, Claude, Grok, Groq, DeepSeek, Mistral — billed per token. A runaway loop or a leaked key turns a $10 month into a $2,000 one overnight. TokenBrake meters them all live and can stop them cold at your budget.</p></div>
+      <div class="card"><div class="tag" style="color:var(--amber)">⚡ Local</div><h3>Watt-burners</h3><p>Ollama and other local models cost $0 in API — but real electricity, RAM, and disk, quietly, 24/7. TokenBrake reads your machine and shows you the number nobody else measures.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The part that pays for itself</h2>
+    <p class="lead">Set a budget. Pick a mode. That's the whole product.</p>
+    <div class="two">
+      <div class="card"><h3>🛑 Hard cap</h3><p>The circuit breaker. Hit your budget and the next call is stopped with a clear message — not a surprise invoice. A $10/mo tool that saves you from one $200 bill has already paid for a year.</p></div>
+      <div class="card"><h3>🔔 Soft cap</h3><p>For when the spend is a profit center and you <i>want</i> to run over. TokenBrake just warns you and keeps going — you always know exactly where you stand, and you stay in control.</p></div>
+    </div>
+  </section>
+
+  <section id="get">
+    <h2>Live in two minutes</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><p><b>Install the widget.</b> Grab SwiftBar (free menu-bar host) and point it at TokenBrake. Your <b>local models show up automatically</b> — no setup, nothing to configure.</p></div>
+      <div class="step"><div class="n">2</div><p><b>Meter your cloud AIs.</b> Change one line — the API base URL — to <code>localhost:8787/openai</code>. Your key passes straight through and is never stored.</p></div>
+      <div class="step"><div class="n">3</div><p><b>Set a budget.</b> <code>set-budget openai 20 hard</code> and you're protected. Live spend shows in your menu bar; a runaway bill gets stopped before it lands.</p></div>
+    </div>
+    <div style="margin-top:22px" class="cta-row"><a class="btn" href="/get">Start your free trial →</a></div>
+    <div class="note">14 days free, everything unlocked, no card and no account. After that it's $99/yr.</div>
+  </section>
+
+  <section>
+    <h2>Simple pricing</h2>
+    <p class="lead">Two plans, billed once a year. No usage tiers, no per-seat math games — priced to <i>save</i> you money.</p>
+    <div class="price">
+      <div class="plan hot"><div class="pn">Solo</div><div class="pp">$99<span>/yr</span></div><ul><li>Up to <b>3 monitored agents</b></li><li>Hard, soft &amp; off caps</li><li>Alerts at your own thresholds</li><li>Local watt + RAM tracking</li></ul></div>
+      <div class="plan"><div class="pn">Business</div><div class="pp">$490<span>/yr</span></div><ul><li><b>Unlimited agents</b></li><li>Everything in Solo</li><li>Webhook alerts (Slack, etc.)</li><li>Your AI can run it all via <code>/agent.json</code></li></ul></div>
+    </div>
+    <div style="margin-top:20px" class="cta-row"><a class="btn" href="/pricing">Buy a license →</a><a class="btn ghost" href="/get">Or start the free trial</a></div>
+    <p class="note" style="margin-top:14px"><b>What counts as an "agent"?</b> One labeled stream of AI usage you route through TokenBrake — a bot, a script, a project. Not a device. Whether it runs on a laptop, a server, or a phone, if its API calls go through TokenBrake it's one agent.</p>
+  </section>
+
+  <section>
+    <h2>What TokenBrake can and can't see</h2>
+    <p class="lead">We're a meter your AI traffic passes through — so we're honest about the line.</p>
+    <div class="trust">
+      <div>✅ <b>Any device, any language.</b> Laptop, server, or <b>phone</b> — if an app or agent lets you set its API base URL, TokenBrake meters and caps it.</div>
+      <div>✅ <b>Your own apps &amp; agents.</b> Anything you or your team built on the OpenAI or Anthropic API routes through us in one line.</div>
+      <div>🚫 <b>Not consumer apps.</b> The ChatGPT or Claude phone/desktop apps bill through the vendor and can't be proxied — by us or anyone. That usage stays invisible to TokenBrake.</div>
+      <div>🚫 <b>Not a spy tool.</b> We only see traffic you deliberately point at us. We don't watch a device.</div>
+    </div>
+    <p class="note" style="margin-top:16px">Bottom line: this is for the <b>API-based AI</b> your business runs — the agents and scripts doing the work. It is <i>not</i> a way to track an employee's personal use of a chat app.</p>
+  </section>
+
+  <section>
+    <h2>Built to be trusted</h2>
+    <p class="lead">We sit between your app and your AI provider. That's a position of trust, and we treat it that way.</p>
+    <div class="trust">
+      <div>🔒 <b>Never stores your keys.</b> Your API key passes straight through to the real provider and is gone.</div>
+      <div>🙈 <b>Never stores your prompts.</b> We keep token counts and dollars — never your content.</div>
+      <div>🏠 <b>Runs on your machine.</b> No cloud account. Your numbers live on your Mac.</div>
+      <div>🛡️ <b>Over-counts, never under.</b> When unsure of a price, we round up — so a bill can't slip past the cap.</div>
+    </div>
+    <p class="note" style="margin-top:18px">TokenBrake is a safety tool, not a warranty — it dramatically reduces bill-shock, it doesn't promise a bill can never exceed a budget.</p>
+  </section>
+
+</div>
+<footer>TokenBrake — a circuit breaker for your AI bill · an Akkad Empires product<br><br>
+<a href="/guides">Guides</a> · <a href="/calculator">Cost calculator</a> · <a href="/pricing">Pricing</a> · <a href="/docs">Docs</a> · <a href="/faq">FAQ</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a><br><br>
+<a href="/guides" style="color:var(--teal)">Guides: how to cap your OpenAI, Claude &amp; Gemini API bills →</a></footer>
+</body>
+</html>

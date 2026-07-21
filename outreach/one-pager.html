@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TokenBrake — one-pager</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  @page{size:letter;margin:14mm}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:#1a1d24;line-height:1.5;background:#fff}
+  .sheet{max-width:760px;margin:0 auto;padding:28px 30px}
+  .print-hint{background:#fff7ec;border:1px solid #f0d9b5;border-radius:8px;padding:10px 14px;font-size:13px;color:#7a5a1e;margin-bottom:20px}
+  @media print{.print-hint{display:none}}
+  .top{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #f6a935;padding-bottom:12px;margin-bottom:16px}
+  .logo{font-weight:800;font-size:26px;letter-spacing:.5px}.logo b{color:#f6a935}
+  .tag{font-size:13px;color:#666;text-align:right}
+  h1{font-size:22px;margin:6px 0 4px;letter-spacing:-.3px}
+  .lead{color:#444;font-size:14.5px;margin-bottom:16px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+  .box{border:1px solid #e4e7ec;border-radius:10px;padding:13px 15px}
+  .box h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#f6a935;margin-bottom:6px}
+  .box p,.box li{font-size:13.5px;color:#333}
+  ul{margin:4px 0 0 16px}li{margin:3px 0}
+  .price{display:flex;gap:12px;margin:4px 0 16px}
+  .plan{flex:1;border:1px solid #e4e7ec;border-radius:10px;padding:12px 14px}
+  .plan.hot{border-color:#f6a935;background:#fffdf8}
+  .plan .n{font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#f6a935}
+  .plan .p{font-size:22px;font-weight:800;margin:2px 0}
+  .plan .d{font-size:12.5px;color:#555}
+  .install{background:#0c0d10;color:#e8eaf0;border-radius:8px;padding:11px 14px;font-family:ui-monospace,Menlo,monospace;font-size:13px;margin-bottom:14px}
+  .install span{color:#4fd1c5}
+  .foot{border-top:1px solid #e4e7ec;padding-top:12px;font-size:13px;color:#555;display:flex;justify-content:space-between}
+  .honest{font-size:12.5px;color:#777;font-style:italic;margin-bottom:14px}
+  b.k{color:#1a1d24}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="print-hint">This is your sell sheet. To make a PDF: press <b>Cmd/Ctrl&nbsp;+&nbsp;P</b> → "Save as PDF". This yellow note won't print.</div>
+
+  <div class="top">
+    <div class="logo">TOKEN<b>BRAKE</b></div>
+    <div class="tag">A circuit breaker for your AI bill<br>an Akkad Empires product · tokenbrake.com</div>
+  </div>
+
+  <h1>Stop a runaway AI API bill before it lands.</h1>
+  <p class="lead">Your AI agents bill by the token. One retry loop, a leaked key, or a stuck agent can turn a $200 month into a five-figure invoice you don't see until it's too late. Your provider's native limits are delayed (OpenAI's up to 24 hours) or account-wide — they can't stop <b class="k">one</b> runaway agent in real time. TokenBrake can.</p>
+
+  <div class="grid">
+    <div class="box">
+      <h2>What it does</h2>
+      <ul>
+        <li>Meters every AI call <b class="k">in real time</b></li>
+        <li><b class="k">Per-agent</b> budgets — one bot can't drain the rest</li>
+        <li><b class="k">Hard-stops</b> the next call at your budget</li>
+        <li>Alerts at your own thresholds (80/100/125%)</li>
+        <li>Soft mode: let a profitable job run over on purpose</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h2>Built to be trusted</h2>
+      <ul>
+        <li><b class="k">Self-hosted</b> — runs on your server</li>
+        <li>Your API keys &amp; prompts are <b class="k">never stored</b></li>
+        <li>Forwards only to an allowlist (SSRF-guarded)</li>
+        <li><b class="k">Fails open</b> — never breaks your production</li>
+        <li>Over-counts when unsure — a bill can't slip the cap</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px">
+    <h2>Works with your stack</h2>
+    <p>OpenAI · Anthropic (Claude) · xAI (Grok) · Groq · DeepSeek · Mistral · Google Gemini · OpenRouter — including streaming and prompt caching. Point your base URL at it and tag each agent with one header. Your AI agent can even operate it via an <b class="k">MCP server</b> and a machine-readable manifest.</p>
+  </div>
+
+  <div class="price">
+    <div class="plan hot"><div class="n">Solo</div><div class="p">$99<span style="font-size:13px;color:#777">/yr</span></div><div class="d">Up to 3 monitored agents. Hard/soft/off caps, custom alerts.</div></div>
+    <div class="plan"><div class="n">Business</div><div class="p">$490<span style="font-size:13px;color:#777">/yr</span></div><div class="d">Unlimited agents. Everything in Solo + webhook alerts.</div></div>
+  </div>
+
+  <div class="install">Install in one line:&nbsp; <span>curl -fsSL https://tokenbrake.com/install.sh | sh</span></div>
+
+  <p class="honest">Honest by design: TokenBrake is a safety brake, not a warranty. It dramatically reduces bill-shock — it doesn't promise a bill can never exceed a budget. Keep your provider-side limits on too.</p>
+
+  <div class="foot">
+    <span><b class="k">See your exposure:</b> tokenbrake.com/calculator &nbsp;·&nbsp; <b class="k">Guides:</b> tokenbrake.com/guides</span>
+    <span>willbgreen777@gmail.com</span>
+  </div>
+</div>
+</body>
+</html>

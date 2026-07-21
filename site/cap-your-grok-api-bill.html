@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>How to Cap Your Grok (xAI) API Bill (2026 Guide)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="xAI gives Grok API real cost controls — prepaid credits that auto-reject when depleted, an optional monthly invoiced limit, and auto top-up. Here's what they do, where they fall short for multi-agent teams, and how to cap per-agent in real time.">
+<meta property="og:title" content="How to Cap Your Grok (xAI) API Bill">
+<meta property="og:description" content="What xAI's native Grok spend controls do, and how to cap your bill per-agent in real time.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://tokenbrake.com/cap-your-grok-api-bill">
+<style>
+  :root{--bg:#0c0d10;--panel:#15171c;--edge:#262a33;--ink:#e8eaf0;--dim:#8b93a3;--amber:#f6ad55;--teal:#4fd1c5}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px 70px}
+  a{color:var(--teal)} .nav{display:flex;justify-content:space-between;padding:20px 0}
+  .logo{font-weight:800;font-size:19px}.logo b{color:var(--amber)}
+  h1{font-size:33px;line-height:1.2;margin:24px 0 10px;letter-spacing:-.4px}
+  .meta{color:var(--dim);font-size:14px;margin-bottom:24px}
+  h2{font-size:22px;margin:34px 0 10px}
+  p{margin:14px 0;color:#d3d8e2} li{margin:8px 0;color:#d3d8e2}
+  ul,ol{margin:12px 0 12px 22px}
+  .callout{background:var(--panel);border:1px solid var(--edge);border-left:4px solid var(--amber);border-radius:0 10px 10px 0;padding:16px 20px;margin:22px 0}
+  .cta{display:block;background:var(--panel);border:1px solid var(--amber);border-radius:14px;padding:22px;margin:32px 0;text-align:center}
+  .cta a{display:inline-block;background:var(--amber);color:#181206;font-weight:800;padding:12px 22px;border-radius:10px;text-decoration:none;margin-top:10px}
+  code{background:#08090c;border:1px solid var(--edge);border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--teal)}
+  .rel{background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:14px 18px;margin:26px 0;font-size:14.5px}
+  .rel a{margin-right:14px}
+  footer{color:var(--dim);font-size:13px;border-top:1px solid var(--edge);padding-top:22px;margin-top:40px}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"How to Cap Your Grok (xAI) API Bill","description":"What xAI's native Grok cost controls do — prepaid credits, monthly invoiced limit, auto top-up — where they fall short for multi-agent teams, and how to cap per-agent in real time.","mainEntityOfPage":"https://tokenbrake.com/cap-your-grok-api-bill","author":{"@type":"Organization","name":"Akkad Empires"},"publisher":{"@type":"Organization","name":"TokenBrake","url":"https://tokenbrake.com"}}
+</script>
+</head>
+<body><div class="wrap">
+<nav class="nav"><div class="logo"><a href="/" style="color:inherit">TOKEN<b>BRAKE</b></a></div><a href="/guides">← all guides</a></nav>
+
+<h1>How to Cap Your Grok (xAI) API Bill</h1>
+<div class="meta">A practical 2026 guide — xAI's native Grok cost controls, and the gap they leave for multi-agent teams.</div>
+
+<p>Good news first: xAI actually gives the Grok API meaningful cost controls out of the box. If you're here because a runaway agent or a bad loop could quietly run up a Grok bill, you're not starting from zero. The question is whether those controls stop the specific failure mode you're worried about — one agent among many going haywire.</p>
+
+<h2>What xAI's native controls do</h2>
+<p>From the xAI Console, under <strong>Billing → API spend management</strong>, you get a few real levers:</p>
+<ul>
+  <li><strong>Prepaid credits as a hard floor.</strong> With the default <code>$0</code> invoiced billing limit, xAI uses only your prepaid credits and <strong>automatically rejects requests once those credits are depleted</strong>. That's a genuine hard stop.</li>
+  <li><strong>An optional monthly invoiced limit.</strong> Set an invoiced limit above <code>$0</code> and usage beyond your prepaid credits is billed monthly — until you hit the limit, at which point requests stop until you raise it.</li>
+  <li><strong>Warnings and top-up throttles.</strong> You're warned at 80% of your monthly limit, and auto top-ups are capped (minimum $25, at most 5 per 24 hours) to avoid an unexpectedly large spend.</li>
+</ul>
+<p>Turn these on. The prepaid-credit model in particular is a real backstop most providers don't give you.</p>
+
+<h2>Where the native controls fall short</h2>
+<ul>
+  <li><strong>They're account- and team-wide, not per-agent.</strong> Every Grok agent you run draws from the same credit pool and the same invoiced limit. One runaway drains the shared balance and <em>starves every other Grok workload</em> with it — your production bot dies because an experiment looped.</li>
+  <li><strong>Prepaid is all-or-nothing.</strong> You can't give the support bot its own $50 ceiling and the batch job its own $200 ceiling. It's one balance for everything.</li>
+  <li><strong>Auto top-up can quietly refill the "hard" floor.</strong> If auto top-up is on, a runaway can trigger multiple top-ups (up to 5 per 24 hours, $25+ each) — so "prepaid" isn't a firm ceiling; it can climb while you sleep.</li>
+  <li><strong>The invoiced limit is monthly, and 80% is just a warning.</strong> A fast loop can do a lot of damage inside one monthly window, and a warning doesn't stop the next call.</li>
+</ul>
+<div class="callout">xAI protects the <strong>account</strong> — its shared pool, on a <strong>monthly</strong> cycle. What it doesn't do is give one runaway <strong>agent</strong> its own hard stop at <strong>your</strong> number, in real time, without starving everything else that shares the balance.</div>
+
+<h2>Adding a real-time, per-agent cap</h2>
+<p>Point your Grok base URL at a metering proxy that counts every call as it happens and refuses to forward once a given agent hits its budget. You keep xAI's prepaid floor as the account backstop, and add:</p>
+<ul>
+  <li><strong>Per-agent budgets at your number</strong> — each bot, script, or project gets its own cap, tagged with one header, so one can't drain the shared pool.</li>
+  <li><strong>An immediate hard stop</strong> — the next call is refused at the source, not reconciled at month's end.</li>
+  <li><strong>Your own alert thresholds and a soft mode</strong> — be warned at 80/100/125%, or let a profitable job run over on purpose.</li>
+</ul>
+
+<div class="cta">
+  <strong>TokenBrake is that proxy.</strong>
+  <p style="color:var(--dim);margin:8px 0 0">Point your Grok (or OpenAI, Claude, Gemini, and more) base URL at it and it meters every call in real time, per agent, and hard-stops a runaway at your budget. Self-hosted — your keys and prompts never leave your server. One line to install.</p>
+  <a href="/pricing">Cap your Grok bill — $99/yr →</a>
+</div>
+
+<h2>The bottom line</h2>
+<p>xAI's prepaid-credit model and invoiced limit are a real backstop — set them, and think twice about aggressive auto top-up. But they cap a shared account by the month. For per-agent control at your own number, in real time, put a circuit breaker in front of it.</p>
+
+<div class="rel"><b>Keep reading:</b>
+  <a href="/calculator">AI cost calculator</a>
+  <a href="/cap-your-deepseek-api-bill">Cap your DeepSeek bill</a>
+  <a href="/cap-your-claude-api-bill">Cap your Claude bill</a>
+  <a href="/cap-your-gemini-api-bill">Cap your Gemini bill</a>
+</div>
+
+<footer>TokenBrake — a circuit breaker for your AI bill · <a href="/">tokenbrake.com</a> · an Akkad Empires product</footer>
+</div></body></html>

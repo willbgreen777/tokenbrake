@@ -1,0 +1,7 @@
+{
+  "name": "tokenbrake",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A circuit breaker for your AI API bill — drop-in proxy that meters spend and hard-stops at your budget."
+}

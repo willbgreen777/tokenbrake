@@ -1,0 +1,41 @@
+{
+  "name": "tokenbrake-mcp",
+  "version": "1.0.0",
+  "mcpName": "io.github.selflabbs/tokenbrake",
+  "description": "MCP server for TokenBrake — let an AI agent read its own API spend and hard-stop its own runaway bill at your budget.",
+  "type": "module",
+  "bin": {
+    "tokenbrake-mcp": "index.mjs"
+  },
+  "main": "index.mjs",
+  "files": [
+    "index.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "mcp",
+    "modelcontextprotocol",
+    "ai",
+    "llm",
+    "cost",
+    "budget",
+    "openai",
+    "anthropic",
+    "observability",
+    "finops"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/selflabbs/tokenbrake-mcp.git"
+  },
+  "homepage": "https://tokenbrake.com",
+  "bugs": {
+    "url": "https://github.com/selflabbs/tokenbrake-mcp/issues"
+  },
+  "author": "Northbench",
+  "license": "MIT"
+}

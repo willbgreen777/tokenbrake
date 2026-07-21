@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AI API Cost Guides — cap your OpenAI, Claude & Gemini bills | TokenBrake</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Practical, honest guides to controlling your AI API costs — what each provider's native spend limits really do, where they fall short, and how to cap your bill per-agent in real time.">
+<meta property="og:title" content="AI API Cost Guides — cap your OpenAI, Claude & Gemini bills">
+<meta property="og:description" content="Honest guides to what each provider's spend limits do, and how to truly cap your AI bill.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://tokenbrake.com/guides">
+<style>
+  :root{--bg:#0c0d10;--panel:#15171c;--edge:#262a33;--ink:#e8eaf0;--dim:#8b93a3;--amber:#f6ad55;--teal:#4fd1c5}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px 70px}
+  a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
+  .nav{display:flex;justify-content:space-between;padding:20px 0}
+  .logo{font-weight:800;font-size:19px}.logo b{color:var(--amber)}
+  header{padding:20px 0 6px}
+  .kicker{color:var(--amber);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+  h1{font-size:34px;line-height:1.15;margin:12px 0 8px;letter-spacing:-.4px}
+  .sub{color:var(--dim);font-size:17px;max-width:620px}
+  .card{display:block;background:var(--panel);border:1px solid var(--edge);border-radius:14px;padding:20px 22px;margin-top:16px;transition:border-color .15s}
+  .card:hover{border-color:var(--amber);text-decoration:none}
+  .card h2{font-size:19px;color:var(--ink);margin-bottom:4px}
+  .card p{color:var(--dim);font-size:14.5px}
+  .card .tag{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+  .cta{display:block;background:var(--panel);border:1px solid var(--amber);border-radius:14px;padding:22px;margin:30px 0 0;text-align:center}
+  .cta a{display:inline-block;background:var(--amber);color:#181206;font-weight:800;padding:12px 22px;border-radius:10px;text-decoration:none;margin-top:10px}
+  .foot{color:var(--dim);font-size:12.5px;margin-top:30px;border-top:1px solid var(--edge);padding-top:18px}
+  .foot a{margin-right:16px}
+</style>
+</head>
+<body><div class="wrap">
+<nav class="nav"><div class="logo"><a href="/" style="color:inherit">TOKEN<b>BRAKE</b></a></div><a href="/">tokenbrake.com</a></nav>
+
+<header>
+  <div class="kicker">Guides</div>
+  <h1>Control what your AI actually costs you</h1>
+  <p class="sub">Honest, up-to-date guides on what each provider's native spend limits really do — and how to cap your bill per agent, in real time, before a runaway does it for you.</p>
+</header>
+
+<a class="card" href="/how-much-does-an-ai-agent-cost" style="border-color:var(--amber)">
+  <div class="tag" style="color:var(--amber)">Start here</div>
+  <h2>How much does an AI agent actually cost?</h2>
+  <p>Why agents cost 10–100× a single chat call — the token multipliers, a worked example, the hidden cost drivers, and how to keep the bill under control. The big picture before you dig into any one provider.</p>
+</a>
+
+<a class="card" href="/cap-your-claude-api-bill">
+  <div class="tag">Anthropic</div>
+  <h2>How to cap your Claude API bill</h2>
+  <p>Claude's per-workspace and per-user monthly limits are genuinely good — but they're monthly, per-user not per-agent, and their own docs call the spend reading "informational, not transactional." Here's how to close the gap.</p>
+</a>
+
+<a class="card" href="/cap-your-gemini-api-bill">
+  <div class="tag">Google</div>
+  <h2>How to cap your Gemini API bill</h2>
+  <p>Gemini now has a mandatory monthly spend cap — but it's account-wide, tier-sized, and lets up to 10 minutes of overage through. What it protects, and how to add a per-agent, real-time stop.</p>
+</a>
+
+<a class="card" href="/cap-your-grok-api-bill">
+  <div class="tag">xAI</div>
+  <h2>How to cap your Grok API bill</h2>
+  <p>xAI's prepaid credits and monthly invoiced limit are a real backstop — but they're account-wide, and auto top-up can quietly refill the "hard" floor. How to cap per-agent, at your number, in real time.</p>
+</a>
+
+<a class="card" href="/cap-your-deepseek-api-bill">
+  <div class="tag">DeepSeek</div>
+  <h2>How to cap your DeepSeek API bill</h2>
+  <p>DeepSeek is cheap, but its only native control is your prepaid balance — one shared number, no per-agent limits, no alerts. How to add real-time per-agent budgets before a loop empties it.</p>
+</a>
+
+<a class="card" href="/cap-your-groq-api-bill">
+  <div class="tag">Groq</div>
+  <h2>How to cap your Groq API bill</h2>
+  <p>GroqCloud has a real monthly spend limit with 50/75/90% alerts — but it's organization-wide, so one runaway blocks every key at once, and unblocking production unblocks the runaway too. How to cap per-agent instead.</p>
+</a>
+
+<a class="card" href="/cap-your-mistral-api-bill">
+  <div class="tag">Mistral</div>
+  <h2>How to cap your Mistral API bill</h2>
+  <p>Mistral gives you org and per-workspace monthly caps — among the better native controls. But per-workspace isn't per-agent unless you split every bot into its own workspace. How to close that gap.</p>
+</a>
+
+<a class="card" href="/stop-openai-api-bill-shock">
+  <div class="tag">OpenAI</div>
+  <h2>How to put a hard limit on your OpenAI bill</h2>
+  <p>OpenAI's built-in limit is delayed up to 24 hours and applies to your whole account. Why that isn't enough, and the approaches that actually stop a runaway call.</p>
+</a>
+
+<a class="card" href="/calculator">
+  <div class="tag">Free tool</div>
+  <h2>AI API cost calculator</h2>
+  <p>Estimate your monthly bill across 15 models by tokens — and see what a runaway loop could cost before anyone notices.</p>
+</a>
+
+<div class="cta">
+  <strong>Stop reading, start capping.</strong>
+  <p style="color:var(--dim);margin:8px 0 0">TokenBrake meters every AI call in real time, per agent, and hard-stops a runaway at your budget — across OpenAI, Claude, Gemini, Grok, Groq, DeepSeek, Mistral, and OpenRouter. Self-hosted, one line to install.</p>
+  <a href="/pricing">See pricing — from $99/yr →</a>
+</div>
+
+<div class="foot">
+  <a href="/">Home</a><a href="/calculator">Calculator</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a><br><br>
+  TokenBrake — a circuit breaker for your AI bill · an Akkad Empires product.
+</div>
+</div></body></html>
