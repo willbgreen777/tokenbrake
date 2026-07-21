@@ -91,7 +91,7 @@
 <p>Output is 3–5× the price of input on most models, and thinking tokens bill as output. Cap max tokens, and dial reasoning effort down when a task doesn't need it.</p>
 <h3>Unbounded loops</h3>
 <p>An agent with no step limit can loop forever on a task it can't finish — burning money on every turn. Always cap the number of steps.</p>
-<p>A lot of runaway loops start as a <em>design</em> problem rather than a budget one: an agent with no defined scope or escalation rule will keep improvising instead of stopping and handing off. Northbench's guide to <a href="https://northbench-site.vercel.app/how-to-build-an-ai-employee" target="_blank" rel="noopener">building an AI employee that actually works</a> covers that structure — scope, SOPs, escalation, and a definition of done.</p>
+<p>A lot of runaway loops start as a <em>design</em> problem rather than a budget one: an agent with no defined scope or escalation rule will keep improvising instead of stopping and handing off. Northjule's guide to <a href="https://northbench-site.vercel.app/how-to-build-an-ai-employee" target="_blank" rel="noopener">building an AI employee that actually works</a> covers that structure — scope, SOPs, escalation, and a definition of done.</p>
 
 <h2>The part that actually hurts: the runaway</h2>
 <p>Everything above is the <em>expected</em> bill. The scary bill is the <strong>unexpected</strong> one: a retry storm, an infinite tool loop, a prompt-injection that hijacks your agent, or a leaked key someone else is now spending. Any of these can run 20–100× your normal rate for hours before you notice — and by the time a monthly invoice or a delayed provider limit reacts, the money is gone.</p>
