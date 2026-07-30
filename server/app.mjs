@@ -43,13 +43,11 @@ function trialState() {
     return { started, active: daysLeft > 0, daysLeft: Math.max(0, daysLeft) };
   } catch { return { started: 0, active: true, daysLeft: TRIAL_DAYS }; }   // never fail closed
 }
-const LIC = process.env.TB_LICENSE ? verifyLicense(process.env.TB_LICENSE) : null;
-const TRIAL = (LIC && LIC.valid) ? { active: false, daysLeft: 0 } : trialState();
-const PLAN = (LIC && LIC.valid)
-  ? { tier: LIC.tier, seats: LIC.seats, licensed: true, trial: false }
-  : TRIAL.active
-    ? { tier: "trial", seats: seatsForTier("business"), licensed: false, trial: true }   // trial = everything unlocked
-    : { tier: "expired", seats: 1, licensed: false, trial: false };                      // still meters, still caps, 1 seat
+// TokenBrake is FREE — no license, no trial, no cap, forever. The full safety brake, unlocked.
+// (seats:0 = unlimited agents; licensed:true keeps history/export on and suppresses any upsell.)
+const LIC = null;
+const TRIAL = { active: false, daysLeft: 0 };
+const PLAN = { tier: "free", seats: 0, licensed: true, trial: false };
 function planStatus() {
   const used = allAgents().length;                    // distinct agents/projects tracked this month
   const over = PLAN.seats > 0 && used > PLAN.seats;   // seats 0 = unlimited
@@ -194,7 +192,6 @@ server.listen(PORT, () => {
   console.log(`  dashboard: http://localhost:${PORT}/   ·   proxy: /openai /anthropic /xai /groq /deepseek /mistral /gemini /openrouter`);
   console.log(KEY ? "  secured with TB_KEY ✓" : "  ⚠ TB_KEY not set — open to anyone. Set TB_KEY before exposing this.");
   const seatTxt = PLAN.seats > 0 ? `${PLAN.seats} agent${PLAN.seats === 1 ? "" : "s"}` : "unlimited agents";
-  if (PLAN.licensed)   console.log(`  plan: ${PLAN.tier} (${seatTxt}) · licensed ✓`);
-  else if (PLAN.trial) console.log(`  plan: free trial — ${TRIAL.daysLeft} day${TRIAL.daysLeft === 1 ? "" : "s"} left, everything unlocked (${seatTxt}). Buy a licence: https://tokenbrake.com/pricing`);
-  else                 console.log(`  plan: trial ended — still metering, budget caps still enforced, limited to ${seatTxt}. History & CSV export are off. Set TB_LICENSE to restore: https://tokenbrake.com/pricing`);
+  console.log(`  plan: free & unlimited — everything unlocked, forever (${seatTxt}). A free tool from Akkad Empires.`);
+  console.log(`  more free tools: https://northjule.com   ·   watch AI agents build live: https://wrenchyard.com`);
 });

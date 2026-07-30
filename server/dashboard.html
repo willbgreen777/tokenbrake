@@ -115,8 +115,7 @@ async function load(){
   const p = j.plan;
   if(p){
     const cap = p.seats>0 ? p.seats+" agents" : "unlimited agents";
-    if(p.over) el("plan").innerHTML = `<span style="color:var(--amber);font-weight:700">Solo plan · ${p.used}/${p.seats} agents — over your plan.</span> Everything keeps running; <a href="https://tokenbrake.com/pricing" style="color:var(--teal)">upgrade to Business →</a>`;
-    else el("plan").innerHTML = `<b style="color:var(--ink)">${esc(p.tier)}</b> plan · monitoring ${p.used} of ${cap}${p.licensed?"":' <span style="color:var(--dim)">(free)</span>'}`;
+    el("plan").innerHTML = `<b style="color:var(--ink)">Free</b> · monitoring ${p.used} of ${cap} — everything unlocked, forever. <a href="https://northjule.com" style="color:var(--teal)">more free tools →</a>`;
   }
   el("rows").innerHTML = j.agents.length ? j.agents.map(a=>{
     const pct = a.budget>0 ? Math.min(100, a.spend/a.budget*100) : 0;

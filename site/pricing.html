@@ -2,155 +2,84 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>TokenBrake — buy a license (USDC on Base)</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Buy a TokenBrake annual license with USDC on Base. Pay once, verify on-chain, get your license key instantly.">
+<title>Pricing — TokenBrake is free</title>
+<meta name="description" content="TokenBrake is free and open source. The full AI-bill safety brake, unlimited agents, forever — no license, no account, no trial clock.">
+<link rel="canonical" href="https://tokenbrake.com/pricing">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="TokenBrake is free">
+<meta property="og:description" content="The full AI-bill safety brake, unlimited agents, forever. Free and open source.">
+<meta property="og:url" content="https://tokenbrake.com/pricing">
+<meta property="og:type" content="website">
 <style>
-  :root{--bg:#0c0d10;--panel:#15171c;--edge:#262a33;--ink:#e8eaf0;--dim:#8b93a3;--amber:#f6ad55;--red:#fc6a5d;--teal:#4fd1c5;--green:#68d391}
+  :root{--bg:#0c0d10;--panel:#15171c;--edge:#262a33;--ink:#e8eaf0;--dim:#8b93a3;--amber:#f6ad55;--teal:#4fd1c5;--green:#68d391}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
   .wrap{max-width:720px;margin:0 auto;padding:0 22px 60px}
   a{color:var(--teal);text-decoration:none} a:hover{text-decoration:underline}
   .nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
   .logo{font-weight:800;letter-spacing:.5px;font-size:19px} .logo b{color:var(--amber)}
-  header{text-align:center;padding:30px 0 20px}
+  .nav .lk{display:flex;gap:14px;align-items:center;font-size:14px}
+  header{text-align:center;padding:44px 0 20px}
   .kicker{color:var(--amber);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
-  h1{font-size:34px;line-height:1.15;margin:14px auto 10px;letter-spacing:-.4px}
+  h1{font-size:40px;line-height:1.12;margin:14px auto 12px;letter-spacing:-.5px}
+  .free{color:var(--green)}
   .sub{color:var(--dim);font-size:17px;max-width:520px;margin:0 auto}
-  .plans{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0}
-  .plan{background:var(--panel);border:2px solid var(--edge);border-radius:14px;padding:20px;cursor:pointer;transition:border-color .15s}
-  .plan:hover{border-color:var(--dim)}
-  .plan.sel{border-color:var(--amber)}
-  .plan .pn{font-weight:800;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber)}
-  .plan .pp{font-size:30px;font-weight:800;margin:6px 0} .plan .pp span{font-size:14px;color:var(--dim);font-weight:500}
-  .plan .d{color:var(--dim);font-size:14px}
-  .plan .pick{margin-top:10px;font-size:13px;font-weight:700;color:var(--teal)}
-  .plan.sel .pick::before{content:"● selected"} .plan:not(.sel) .pick::before{content:"○ select"}
-  .box{background:var(--panel);border:1px solid var(--edge);border-radius:14px;padding:22px;margin-top:18px}
-  .box h2{font-size:18px;margin-bottom:6px}
-  .box .n{color:var(--dim);font-size:14px;margin-bottom:14px}
-  .addr{display:flex;gap:8px;align-items:center;background:#0a0b0e;border:1px solid var(--edge);border-radius:10px;padding:12px 14px;font-family:ui-monospace,Menlo,monospace;font-size:14px;word-break:break-all}
-  .addr .a{flex:1;color:var(--teal)}
-  input{width:100%;background:#0a0b0e;border:1px solid var(--edge);color:var(--ink);border-radius:10px;padding:12px 14px;font-size:15px;font-family:ui-monospace,Menlo,monospace;margin-top:6px}
-  label{font-size:14px;color:var(--dim)}
-  .btn{display:inline-block;background:var(--amber);color:#181206;font-weight:800;padding:13px 22px;border-radius:10px;border:0;cursor:pointer;font-size:15px;margin-top:14px}
-  .btn:hover{filter:brightness(1.05)} .btn:disabled{opacity:.5;cursor:default}
-  .btn.copy{background:transparent;color:var(--ink);border:1px solid var(--edge);padding:8px 12px;font-size:13px;margin:0}
-  .amt{font-size:22px;font-weight:800;color:var(--amber)}
-  .msg{margin-top:14px;font-size:14.5px;padding:12px 14px;border-radius:10px;display:none}
-  .msg.err{display:block;background:rgba(252,106,93,.12);border:1px solid rgba(252,106,93,.4);color:#ffb4ac}
-  .msg.ok{display:block;background:rgba(104,211,145,.1);border:1px solid rgba(104,211,145,.4);color:#a7e9c2}
-  .key{margin-top:12px;background:#0a0b0e;border:1px solid var(--green);border-radius:10px;padding:14px;font-family:ui-monospace,Menlo,monospace;font-size:14px;word-break:break-all;color:var(--green)}
-  .step-n{display:inline-block;width:24px;height:24px;border-radius:50%;background:var(--amber);color:#181206;font-weight:800;text-align:center;line-height:24px;font-size:13px;margin-right:8px}
-  .foot{color:var(--dim);font-size:12.5px;margin-top:24px;line-height:1.6}
-  code{background:#0a0b0e;border:1px solid var(--edge);border-radius:6px;padding:2px 7px;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--teal)}
-  @media(max-width:640px){.plans{grid-template-columns:1fr}h1{font-size:27px}}
+  .box{background:var(--panel);border:1px solid var(--edge);border-radius:14px;padding:24px;margin-top:26px}
+  .box.big{border-color:var(--green)}
+  .box h2{font-size:19px;margin-bottom:8px}
+  .box p{color:var(--dim);font-size:15px}
+  .box ul{list-style:none;margin:12px 0 0} .box li{padding:5px 0 5px 24px;position:relative;color:var(--ink);font-size:15px}
+  .box li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:800}
+  .btn{display:inline-block;background:var(--amber);color:#181206;font-weight:800;padding:13px 22px;border-radius:10px;border:0;cursor:pointer;font-size:15px;margin-top:16px}
+  .btn:hover{filter:brightness(1.05)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--edge)}
+  .doors{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  .door{background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:16px 18px}
+  .door b{color:var(--ink)}
+  .foot{color:var(--dim);font-size:12.5px;margin-top:30px;text-align:center;border-top:1px solid var(--edge);padding-top:20px}
+  @media(max-width:600px){.doors{grid-template-columns:1fr}h1{font-size:31px}}
 </style>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Product","name":"TokenBrake","description":"Self-hosted circuit breaker for AI API bills — meters every call in real time, per agent, and hard-stops a runaway at your budget. Annual license, paid in USDC on Base.","brand":{"@type":"Brand","name":"TokenBrake"},"offers":[{"@type":"Offer","name":"Solo","price":"99","priceCurrency":"USD","url":"https://tokenbrake.com/pricing","availability":"https://schema.org/InStock","description":"Up to 3 monitored agents, billed annually."},{"@type":"Offer","name":"Business","price":"490","priceCurrency":"USD","url":"https://tokenbrake.com/pricing","availability":"https://schema.org/InStock","description":"Unlimited agents, billed annually."}]}
-</script>
 </head>
 <body>
 <div class="wrap">
-  <nav class="nav"><div class="logo"><a href="/" style="color:inherit">TOKEN<b>BRAKE</b></a></div><a href="/">← Home</a></nav>
-
-  <header>
-    <div class="kicker">Buy a license · USDC on Base</div>
-    <h1>Pay once. Get your key.</h1>
-    <p class="sub">Annual licence. Pay by card, or in USDC on Base — either way you get the same key instantly, and there's no account to create.</p>
-  </header>
-
-  <div id="notlive" class="msg err" style="display:none">Checkout isn't live yet — the receiving wallet hasn't been configured. Check back shortly.</div>
-
-  <div class="plans" id="plans"></div>
-
-  <div class="box" id="cardbox" style="display:none">
-    <h2>Pay by card</h2>
-    <div class="n">Handled by Lemon Squeezy, our merchant of record — they take the card and sort out sales tax and VAT. Your licence key is emailed the moment the payment clears.</div>
-    <div style="margin-top:14px"><a class="btn" id="cardlink" href="#" style="display:inline-block;text-decoration:none">Pay by card →</a></div>
+  <div class="nav">
+    <div class="logo">TOKEN<b>BRAKE</b></div>
+    <div class="lk"><a href="/">Home</a><a href="/guides">Guides</a><a href="https://github.com/willbgreen777/tokenbrake">GitHub</a><a class="btn ghost" href="/get" style="margin:0;padding:8px 14px">Get it free</a></div>
   </div>
 
-  <div class="box" id="paybox">
-    <h2><span class="step-n">1</span>Send <span class="amt" id="amt">—</span> in USDC (Base network)</h2>
-    <div class="n">Send from any wallet or exchange that supports <b>USDC on Base</b>. Sending on the wrong network or the wrong token can't be verified.</div>
-    <div class="addr"><span class="a" id="wallet">loading…</span><button class="btn copy" onclick="copyAddr()">Copy</button></div>
+  <header>
+    <div class="kicker">Pricing</div>
+    <h1>It's <span class="free">free.</span> All of it.</h1>
+    <p class="sub">TokenBrake used to be a paid tool. It isn't anymore. The full safety brake — unlimited agents, history, exports, every cap — is free and open source, forever.</p>
+  </header>
 
-    <h2 style="margin-top:22px"><span class="step-n">2</span>Paste your transaction hash</h2>
-    <div class="n">After it confirms (a few seconds on Base), copy the transaction hash from your wallet or <a href="https://basescan.org" target="_blank" rel="noopener">BaseScan</a>.</div>
-    <label>Transaction hash</label>
-    <input id="tx" placeholder="0x…" autocomplete="off" spellcheck="false">
+  <div class="box big">
+    <h2>Free &amp; unlimited</h2>
+    <p>Everything TokenBrake does, with nothing held back and nothing to buy:</p>
+    <ul>
+      <li>Meter every OpenAI, Anthropic, Gemini, Grok, Groq, DeepSeek, Mistral &amp; OpenRouter call, live</li>
+      <li>Hard-stop a runaway bill at your budget — per agent</li>
+      <li>Unlimited monitored agents (no seat limits)</li>
+      <li>Spend history, CSV export, custom alerts, webhooks</li>
+      <li>Local-model electricity + RAM estimates</li>
+      <li>Runs entirely on your machine — never stores your keys or prompts</li>
+    </ul>
+    <a class="btn" href="/get">Get TokenBrake — free →</a>
+    <a class="btn ghost" href="https://github.com/willbgreen777/tokenbrake" style="margin-left:8px">View source on GitHub</a>
+  </div>
 
-    <label style="display:block;margin-top:12px">Email <span style="color:var(--dim)">(optional — we'll send your key so you don't lose it)</span></label>
-    <input id="email" type="email" placeholder="you@company.com" autocomplete="email" spellcheck="false" style="font-family:inherit">
-
-    <button class="btn" id="go" onclick="verify()">Verify payment &amp; get my key</button>
-    <div class="msg" id="msg"></div>
-    <div id="keywrap" style="display:none">
-      <div class="n" style="margin-top:16px"><b>Your license key</b> — save it now. Set it on your TokenBrake server as <code>TB_LICENSE</code> and restart. <a href="/docs#license">Setup steps →</a></div>
-      <div class="key" id="key"></div>
-      <button class="btn copy" style="margin-top:10px" onclick="copyKey()">Copy key</button>
-      <div class="n" style="margin-top:10px"><b>Lost it later?</b> Come back here and re-enter this same transaction hash — you'll get the exact same key back.</div>
+  <div class="box">
+    <h2>Why free?</h2>
+    <p>TokenBrake is a free tool from <b style="color:var(--ink)">Akkad Empires</b>. We'd rather it save a lot of people from bill-shock — and introduce you to the other things we build — than sit behind a paywall. If it saves you from one surprise invoice, that's the whole point.</p>
+    <div class="doors">
+      <div class="door"><b>Northjule →</b><br><a href="https://northjule.com">northjule.com</a><br><span style="color:var(--dim);font-size:13.5px">Free tools + ready-to-run AI-employee &amp; IT kits.</span></div>
+      <div class="door"><b>Wrenchyard →</b><br><a href="https://wrenchyard.com">wrenchyard.com</a><br><span style="color:var(--dim);font-size:13.5px">Watch autonomous AI agents build live.</span></div>
     </div>
   </div>
 
-  <div class="foot">
-    Paid in USDC on Base to keep fees near zero and settlement instant. Your key is generated <b>from your payment transaction</b>, so re-checking the same transaction always returns the same key. Licenses are annual; enforcement is soft — an expired or over-plan license never stops your traffic, it just prompts a renewal.<br><br>
-    Trouble? Email <a href="mailto:willbgreen777@gmail.com">willbgreen777@gmail.com</a> with your transaction hash and we'll sort it by hand.<br><br>
-    <a href="/docs">Docs</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a> · By purchasing you agree to our Terms.
-  </div>
+  <div class="foot">TokenBrake — a free circuit breaker for your AI bill · an Akkad Empires project<br>
+  <a href="/">Home</a> · <a href="/guides">Guides</a> · <a href="/docs">Docs</a> · <a href="/faq">FAQ</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></div>
 </div>
-
-<script>
-let CFG = null, plan = "solo";
-const el = id => document.getElementById(id);
-
-async function boot(){
-  try{ CFG = await (await fetch("/api/buy")).json(); }catch{ el("notlive").style.display="block"; return; }
-  if(!CFG.configured){ el("notlive").style.display="block"; }
-  el("wallet").textContent = CFG.wallet || "not configured yet";
-  const order = ["solo","business"];
-  el("plans").innerHTML = order.map(k=>{
-    const p = CFG.plans[k];
-    return `<div class="plan ${k===plan?'sel':''}" data-k="${k}" onclick="pick('${k}')">
-      <div class="pn">${k}</div><div class="pp">$${p.price}<span>/yr</span></div>
-      <div class="d">${p.label.replace(/^[^(]*\(/,'').replace(/\)$/,'')}</div>
-      <div class="pick"></div></div>`;
-  }).join("");
-  paint();
-}
-function pick(k){ plan=k; document.querySelectorAll(".plan").forEach(e=>e.classList.toggle("sel", e.dataset.k===k)); paint(); }
-function paint(){
-  if(CFG&&CFG.plans[plan]) el("amt").textContent = "$"+CFG.plans[plan].price;
-  // Show the card option only when a hosted checkout URL exists for the selected plan, so we
-  // never render a button that goes nowhere.
-  const url = CFG && CFG.card && CFG.card[plan];
-  if(url){ el("cardlink").href = url; el("cardbox").style.display = ""; }
-  else { el("cardbox").style.display = "none"; }
-}
-function copyAddr(){ if(CFG&&CFG.wallet){ navigator.clipboard.writeText(CFG.wallet); } }
-function copyKey(){ const k=el("key").textContent; if(k) navigator.clipboard.writeText(k); }
-
-async function verify(){
-  const tx = el("tx").value.trim();
-  const email = el("email").value.trim();
-  const m = el("msg"); m.className="msg"; m.style.display="none";
-  el("keywrap").style.display="none";
-  if(!/^0x[0-9a-fA-F]{64}$/.test(tx)){ m.className="msg err"; m.textContent="That doesn't look like a Base transaction hash (0x… , 64 hex characters)."; return; }
-  el("go").disabled=true; el("go").textContent="Checking the chain…";
-  try{
-    const r = await fetch("/api/buy",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({plan,txHash:tx,email})});
-    const d = await r.json();
-    if(d.ok){
-      const sent = d.emailed ? " A copy is on its way to your email." : "";
-      m.className="msg ok"; m.innerHTML=`Payment of $${d.paid} verified. <b>${d.plan}</b> license active through <b>${d.expires}</b>.${sent}`;
-      el("key").textContent=d.license; el("keywrap").style.display="block";
-    }else{
-      m.className="msg err"; m.textContent=d.reason || "Could not verify that payment.";
-    }
-  }catch{ m.className="msg err"; m.textContent="Network hiccup — try again in a moment."; }
-  el("go").disabled=false; el("go").textContent="Verify payment & get my key";
-}
-boot();
-</script>
 </body>
 </html>

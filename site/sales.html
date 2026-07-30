@@ -2,110 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>TokenBrake — sales (admin)</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<style>
-  :root{--bg:#0c0d10;--panel:#15171c;--edge:#262a33;--ink:#e8eaf0;--dim:#8b93a3;--amber:#f6ad55;--teal:#4fd1c5;--green:#68d391;--red:#fc6a5d}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;line-height:1.6;padding:24px}
-  .wrap{max-width:920px;margin:0 auto}
-  a{color:var(--teal);text-decoration:none}
-  .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-  .logo{font-weight:800;font-size:19px}.logo b{color:var(--amber)}
-  h1{font-size:24px;margin:14px 0 4px}
-  .sub{color:var(--dim);font-size:14px;margin-bottom:18px}
-  input{background:#08090c;border:1px solid var(--edge);color:var(--ink);border-radius:8px;padding:10px 12px;font-size:14px;font-family:inherit}
-  button{background:var(--amber);color:#181206;border:0;border-radius:8px;padding:10px 15px;font-weight:800;cursor:pointer;font-size:14px}
-  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--edge)}
-  .cards{display:flex;gap:12px;margin:14px 0;flex-wrap:wrap}
-  .card{background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:14px 18px;flex:1;min-width:150px}
-  .card .k{color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
-  .card .v{font-size:26px;font-weight:800;color:var(--amber)}
-  table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--edge);border-radius:12px;overflow:hidden;font-size:13.5px}
-  th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);padding:10px 12px;border-bottom:1px solid var(--edge)}
-  td{padding:10px 12px;border-bottom:1px solid var(--edge);vertical-align:top;font-family:ui-monospace,Menlo,monospace}
-  tr:last-child td{border-bottom:0}
-  .pill{font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px;background:rgba(104,211,145,.14);color:var(--green)}
-  .pill.underpaid{background:rgba(252,106,93,.15);color:var(--red)}
-  .key{color:var(--green);word-break:break-all;font-size:12px}
-  .mono{font-family:ui-monospace,Menlo,monospace}
-  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
-  .msg{font-size:13.5px;color:var(--dim);margin:8px 0}
-  .box{background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:16px 18px;margin:16px 0}
-  .foot{color:var(--dim);font-size:12px;margin-top:20px;line-height:1.6}
-  .copy{font-size:11px;padding:4px 8px}
-</style>
+<title>TokenBrake is free</title>
+<meta name="robots" content="noindex">
+<meta http-equiv="refresh" content="0; url=/pricing">
+<link rel="canonical" href="https://tokenbrake.com/pricing">
+<style>body{background:#0c0d10;color:#e8eaf0;font-family:-apple-system,system-ui,sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center;margin:0}a{color:#4fd1c5}</style>
 </head>
-<body><div class="wrap">
-  <div class="top"><div class="logo">TOKEN<b>BRAKE</b> <span style="color:var(--dim);font-weight:400;font-size:14px">· sales</span></div><a href="/">← site</a></div>
-
-  <div id="gate" class="box" style="display:none">
-    <div class="msg">Enter your admin key to view sales.</div>
-    <div class="row"><input id="key" type="password" placeholder="TB_ADMIN_KEY" style="flex:1;min-width:220px"><button onclick="connect()">View sales</button></div>
-    <div id="gateMsg" class="msg" style="color:var(--red)"></div>
-  </div>
-
-  <div id="app" style="display:none">
-    <div class="cards">
-      <div class="card"><div class="k">Revenue (shown)</div><div class="v" id="rev">—</div></div>
-      <div class="card"><div class="k">Sales (shown)</div><div class="v" id="cnt">—</div></div>
-      <div class="card"><div class="k">History</div><div class="v" id="cov" style="font-size:15px;color:var(--ink);font-weight:600">—</div></div>
-    </div>
-
-    <div class="box">
-      <div class="msg"><b>Resend a buyer's key.</b> Paste their payment transaction and get the exact license key back.</div>
-      <div class="row"><input id="tx" placeholder="0x… transaction hash" style="flex:1;min-width:240px" class="mono"><button onclick="lookup()">Look up</button></div>
-      <div id="lookOut"></div>
-    </div>
-
-    <table><thead><tr><th>Date</th><th>Plan</th><th>Amount</th><th>From</th><th>Tx</th><th>License key</th></tr></thead>
-      <tbody id="rows"><tr><td colspan="6" style="color:var(--dim)">loading…</td></tr></tbody>
-    </table>
-    <div id="listMsg" class="msg"></div>
-  </div>
-
-  <div class="foot">
-    The blockchain is the ledger — this reads every USDC payment to your wallet and re-derives each key on the fly. Nothing is stored here.<br>
-    Showing recent history by default. For complete all-time history, set <code>ALCHEMY_URL</code> (a free Alchemy Base endpoint) in the deployment env.
-  </div>
+<body>
+<div>
+  <p style="font-size:20px;font-weight:800">TokenBrake is free now.</p>
+  <p>No checkout needed. <a href="/pricing">See the (free) pricing →</a> or <a href="/get">get it →</a></p>
 </div>
-<script>
-let KEY = localStorage.getItem("tb_admin") || "";
-const el = id => document.getElementById(id);
-const money = n => "$" + (Number(n)||0).toFixed(2);
-const esc = s => String(s||"").replace(/[<>&]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]));
-const short = s => s ? s.slice(0,6)+"…"+s.slice(-4) : "";
-function connect(){ KEY = el("key").value.trim(); localStorage.setItem("tb_admin", KEY); load(); }
-function copy(t){ navigator.clipboard.writeText(t); }
-
-async function api(qs){
-  const r = await fetch("/api/sales"+qs, { headers: { "x-tb-admin": KEY } });
-  return { status: r.status, body: await r.json() };
-}
-async function lookup(){
-  const tx = el("tx").value.trim();
-  el("lookOut").innerHTML = '<div class="msg">checking the chain…</div>';
-  const { body } = await api("?tx="+encodeURIComponent(tx));
-  if(body.ok){ const s=body.sale;
-    el("lookOut").innerHTML = `<div class="box" style="margin-top:10px"><div><span class="pill ${s.tier?'':'underpaid'}">${esc(s.plan)}</span> &nbsp;${money(s.amount)} &nbsp;from <span class="mono">${esc(short(s.from))}</span></div><div class="key" style="margin-top:8px">${esc(s.license||'—')}</div>${s.license?`<button class="ghost copy" style="margin-top:8px" onclick="copy('${s.license}')">Copy key</button>`:''}</div>`;
-  } else { el("lookOut").innerHTML = `<div class="msg" style="color:var(--red)">${esc(body.reason||'Not found')}</div>`; }
-}
-async function load(){
-  const { status, body } = await api("");
-  if(status===401 || status===503){ el("app").style.display="none"; el("gate").style.display="block"; el("gateMsg").textContent = status===503 ? (body.reason||"Not enabled.") : "Bad admin key."; return; }
-  el("gate").style.display="none"; el("app").style.display="block";
-  if(!body.ok){ el("rows").innerHTML = `<tr><td colspan=6 style="color:var(--red)">${esc(body.reason||'error')}</td></tr>`; return; }
-  el("rev").textContent = money(body.revenue);
-  el("cnt").textContent = body.count;
-  el("cov").textContent = body.full ? "full ✓" : "recent";
-  el("rows").innerHTML = body.sales.length ? body.sales.map(s=>{
-    const date = s.at ? new Date(s.at).toISOString().slice(0,10) : (s.block? "blk "+s.block : "—");
-    return `<tr><td>${esc(date)}</td><td><span class="pill ${s.tier?'':'underpaid'}">${esc(s.plan)}</span></td><td>${money(s.amount)}</td><td>${esc(short(s.from))}</td><td><a href="https://basescan.org/tx/${esc(s.txHash)}" target="_blank" rel="noopener">${esc(short(s.txHash))}</a></td><td><span class="key">${esc(s.license||'—')}</span>${s.license?` <button class="ghost copy" onclick="copy('${s.license}')">copy</button>`:''}</td></tr>`;
-  }).join("") : '<tr><td colspan=6 style="color:var(--dim)">No sales found in the scanned window yet.</td></tr>';
-  if(!body.full) el("listMsg").innerHTML = "Showing recent on-chain history only. Older sales can still be resurrected above by transaction hash.";
-}
-load();
-</script>
 </body>
 </html>

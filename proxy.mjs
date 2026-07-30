@@ -10,24 +10,8 @@ import { loadStore, recordSpend } from "./lib/store.js";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-// TokenBrake is a paid tool ($99/yr) with a 14-day free trial — everything unlocked, no card,
-// no account, no phone-home. We stamp first run locally and count down from there.
-// After the trial NOTHING about your traffic changes: the proxy keeps metering and keeps
-// enforcing your budget caps, forever. The brake is a safety device and we will not disable a
-// safety device over money. What you lose is scale and reporting — see the server build.
-const TRIAL_DAYS = 14;
-const TRIAL_FILE = join(process.env.HOME || ".", ".tokenbrake-trial");
-function trialDaysLeft() {
-  try {
-    let started;
-    try { started = Number(readFileSync(TRIAL_FILE, "utf8").trim()); } catch {}
-    if (!Number.isFinite(started) || started <= 0) {
-      started = Math.floor(Date.now() / 1000);
-      try { writeFileSync(TRIAL_FILE, String(started), { mode: 0o600 }); } catch {}
-    }
-    return Math.max(0, Math.ceil((started + TRIAL_DAYS * 86400 - Date.now() / 1000) / 86400));
-  } catch { return TRIAL_DAYS; }
-}
+// TokenBrake is free and open source — no license, no account, no phone-home, no trial clock.
+// The proxy meters every call and enforces your budget caps, forever. A free tool from Akkad Empires.
 
 const PORT = Number(process.env.TB_PORT) || 8787;
 const json = (res, status, obj) => { res.writeHead(status, { "content-type": "application/json" }); res.end(JSON.stringify(obj)); };
@@ -94,8 +78,6 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, "127.0.0.1", () => {
   console.log(`TokenBrake proxy live → http://localhost:${PORT}  (point your AI's base URL here: /openai or /anthropic)`);
-  const left = process.env.TB_LICENSE ? -1 : trialDaysLeft();
-  if (left < 0)       console.log("  licensed ✓  — thank you.");
-  else if (left > 0)  console.log(`  free trial — ${left} day${left === 1 ? "" : "s"} left. TokenBrake is $99/yr: https://tokenbrake.com/pricing`);
-  else                console.log("  trial ended — metering and your budget caps keep running (the brake never expires).\n  Support it and unlock the team server: https://tokenbrake.com/pricing");
+  console.log("  free & unlimited — the brake never expires, nothing to buy. A free tool from Akkad Empires.");
+  console.log("  more free tools: https://northjule.com   ·   watch AI agents build live: https://wrenchyard.com");
 });

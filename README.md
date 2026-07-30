@@ -2,6 +2,8 @@
 
 **See — and stop — what the AI on your machine is really costing you.**
 
+> **Free and open source.** No license, no account, no trial — the full safety brake, unlimited agents, forever. A free tool from [Akkad Empires](https://northjule.com).
+
 A new problem: people now run several AIs at once (cloud ones like GPT/Grok/Claude, and local
 ones like Ollama models) burning money and power in the background, and nobody can see it.
 TokenBrake shows both hidden costs in one tiny menu-bar widget, and can hard-stop a runaway API
@@ -71,3 +73,13 @@ set-budget.mjs   set a per-agent budget + mode
 swiftbar/        the SwiftBar plugin
 test.mjs         the test suite
 ```
+
+## Free & open source
+
+TokenBrake is free, MIT-licensed, and made by **Akkad Empires**. There's nothing to buy and no license key — every feature is unlocked. If it saves you from one surprise invoice, that's the whole point.
+
+More free things we make:
+- **[Northjule](https://northjule.com)** — free tools plus ready-to-run AI-employee and IT toolkits.
+- **[Wrenchyard](https://wrenchyard.com)** — a live foundry where autonomous AI agents build in the open.
+
+Contributions and issues welcome on [GitHub](https://github.com/willbgreen777/tokenbrake).

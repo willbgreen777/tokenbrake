@@ -110,10 +110,9 @@ client = Anthropic(
   -d '{"name":"support-bot","thresholds":[1.25],"webhook":"https://hooks.slack.com/…"}'</pre>
   <p>Leave the webhook blank to stay silent. Thresholds are fractions of budget: <code>1.0</code> = 100%, <code>1.25</code> = 125%.</p>
 
-  <h2 id="license">5. Activate your license</h2>
-  <p>After you <a href="/pricing">buy a license</a>, set the key and restart. Solo covers up to 3 agents; Business is unlimited. Enforcement is soft — going over your plan never stops your traffic, it just prompts an upgrade.</p>
+  <h2 id="license">5. It's free — nothing to activate</h2>
+  <p>TokenBrake is <a href="/pricing">free and open source</a> — there's no license key and no seat limit. Everything is unlocked from the start: unlimited agents, history, exports, and every cap. The only optional env var is <code>TB_KEY</code>, a secret you pick to protect the server if you expose it.</p>
   <pre>TB_KEY=pick-a-long-secret \
-TB_LICENSE=TB-... your license key ... \
 node server/app.mjs</pre>
 
   <h2 id="agent">6. Let your AI run it</h2>

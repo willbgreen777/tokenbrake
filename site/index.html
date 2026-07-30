@@ -58,7 +58,7 @@
   @media(max-width:640px){h1{font-size:32px}.two,.price,.trust{grid-template-columns:1fr}}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"TokenBrake","applicationCategory":"DeveloperApplication","operatingSystem":"Node.js 24+ (macOS, Linux, Windows)","url":"https://tokenbrake.com","description":"A circuit breaker for your AI API bill. Self-hosted proxy that meters every OpenAI, Anthropic, Gemini, Grok, Groq, DeepSeek, Mistral, and OpenRouter call in real time and hard-stops a runaway bill at your budget — per agent. Never stores your keys or prompts.","offers":[{"@type":"Offer","name":"Solo","price":"99","priceCurrency":"USD","description":"Up to 3 monitored agents, billed annually."},{"@type":"Offer","name":"Business","price":"490","priceCurrency":"USD","description":"Unlimited agents, billed annually."}],"publisher":{"@type":"Organization","name":"Akkad Empires","url":"https://tokenbrake.com"}}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"TokenBrake","applicationCategory":"DeveloperApplication","operatingSystem":"Node.js 24+ (macOS, Linux, Windows)","url":"https://tokenbrake.com","description":"A circuit breaker for your AI API bill. Self-hosted proxy that meters every OpenAI, Anthropic, Gemini, Grok, Groq, DeepSeek, Mistral, and OpenRouter call in real time and hard-stops a runaway bill at your budget — per agent. Never stores your keys or prompts.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","description":"Free and unlimited — no license, no account, open source."},"publisher":{"@type":"Organization","name":"Akkad Empires","url":"https://tokenbrake.com"}}
 </script>
 </head>
 <body>
@@ -66,7 +66,7 @@
 
   <nav class="nav">
     <div class="logo">TOKEN<b>BRAKE</b></div>
-    <div style="display:flex;gap:14px;align-items:center"><a href="/guides">Guides</a><a href="/calculator">Calculator</a><a href="/pricing">Pricing</a><a class="btn ghost" href="/get">Start free trial</a></div>
+    <div style="display:flex;gap:14px;align-items:center"><a href="/guides">Guides</a><a href="/calculator">Calculator</a><a href="https://github.com/willbgreen777/tokenbrake">GitHub</a><a class="btn ghost" href="/get">Get it free</a></div>
   </nav>
 
   <header class="hero">
@@ -74,7 +74,7 @@
     <h1>Your AIs are burning money <span class="r">right now.</span> <span class="b">You can't see it.</span></h1>
     <p class="sub">You've got a cloud model, a local model, an agent or two — all running in the background. Quick: what did they cost you today? Nobody knows. TokenBrake shows every AI on your machine in one menu-bar glance — and <b>hard-stops a runaway API bill before it happens.</b></p>
     <div class="cta-row">
-      <a class="btn" href="/get">Try TokenBrake free for 14 days</a>
+      <a class="btn" href="/get">Get TokenBrake — free</a>
       <a class="btn ghost" href="#how">See how it works</a>
     </div>
     <div class="note">Runs entirely on your Mac. Never stores your API keys or your prompts.</div>
@@ -116,19 +116,19 @@
       <div class="step"><div class="n">2</div><p><b>Meter your cloud AIs.</b> Change one line — the API base URL — to <code>localhost:8787/openai</code>. Your key passes straight through and is never stored.</p></div>
       <div class="step"><div class="n">3</div><p><b>Set a budget.</b> <code>set-budget openai 20 hard</code> and you're protected. Live spend shows in your menu bar; a runaway bill gets stopped before it lands.</p></div>
     </div>
-    <div style="margin-top:22px" class="cta-row"><a class="btn" href="/get">Start your free trial →</a></div>
-    <div class="note">14 days free, everything unlocked, no card and no account. After that it's $99/yr.</div>
+    <div style="margin-top:22px" class="cta-row"><a class="btn" href="/get">Get TokenBrake — free →</a></div>
+    <div class="note">Free forever, everything unlocked — no card, no account, no license. Open source.</div>
   </section>
 
   <section>
-    <h2>Simple pricing</h2>
-    <p class="lead">Two plans, billed once a year. No usage tiers, no per-seat math games — priced to <i>save</i> you money.</p>
-    <div class="price">
-      <div class="plan hot"><div class="pn">Solo</div><div class="pp">$99<span>/yr</span></div><ul><li>Up to <b>3 monitored agents</b></li><li>Hard, soft &amp; off caps</li><li>Alerts at your own thresholds</li><li>Local watt + RAM tracking</li></ul></div>
-      <div class="plan"><div class="pn">Business</div><div class="pp">$490<span>/yr</span></div><ul><li><b>Unlimited agents</b></li><li>Everything in Solo</li><li>Webhook alerts (Slack, etc.)</li><li>Your AI can run it all via <code>/agent.json</code></li></ul></div>
+    <h2>It's free. All of it.</h2>
+    <p class="lead">No plans, no license, no trial clock. TokenBrake is free and open source — the full safety brake, unlimited agents, forever.</p>
+    <div class="two">
+      <div class="card"><h3>💸 Why free?</h3><p>TokenBrake is a free tool from <b>Akkad Empires</b>. It exists to save people from bill-shock — and to introduce you to the other things we build.</p></div>
+      <div class="card"><h3>🔗 What else we make</h3><p><a href="https://northjule.com" style="color:var(--teal)">Northjule</a> — free tools plus ready-to-run AI-employee and IT kits.<br><a href="https://wrenchyard.com" style="color:var(--teal)">Wrenchyard</a> — watch autonomous AI agents build live.</p></div>
     </div>
-    <div style="margin-top:20px" class="cta-row"><a class="btn" href="/pricing">Buy a license →</a><a class="btn ghost" href="/get">Or start the free trial</a></div>
-    <p class="note" style="margin-top:14px"><b>What counts as an "agent"?</b> One labeled stream of AI usage you route through TokenBrake — a bot, a script, a project. Not a device. Whether it runs on a laptop, a server, or a phone, if its API calls go through TokenBrake it's one agent.</p>
+    <div style="margin-top:20px" class="cta-row"><a class="btn" href="/get">Get TokenBrake — free →</a><a class="btn ghost" href="https://github.com/willbgreen777/tokenbrake">View source on GitHub</a></div>
+    <p class="note" style="margin-top:14px"><b>What counts as an "agent"?</b> One labeled stream of AI usage you route through TokenBrake — a bot, a script, a project. There's no limit now — monitor as many as you like.</p>
   </section>
 
   <section>
@@ -156,8 +156,8 @@
   </section>
 
 </div>
-<footer>TokenBrake — a circuit breaker for your AI bill · an Akkad Empires product<br><br>
-<a href="/guides">Guides</a> · <a href="/calculator">Cost calculator</a> · <a href="/pricing">Pricing</a> · <a href="/docs">Docs</a> · <a href="/faq">FAQ</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a><br><br>
-<a href="/guides" style="color:var(--teal)">Guides: how to cap your OpenAI, Claude &amp; Gemini API bills →</a></footer>
+<footer>TokenBrake — a free circuit breaker for your AI bill · an Akkad Empires project<br><br>
+<a href="/guides">Guides</a> · <a href="/calculator">Cost calculator</a> · <a href="https://github.com/willbgreen777/tokenbrake">GitHub</a> · <a href="/docs">Docs</a> · <a href="/faq">FAQ</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a><br><br>
+More free tools from Akkad Empires: <a href="https://northjule.com" style="color:var(--teal)">Northjule</a> · <a href="https://wrenchyard.com" style="color:var(--teal)">Wrenchyard</a></footer>
 </body>
 </html>
