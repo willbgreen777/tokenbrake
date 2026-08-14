@@ -5,9 +5,9 @@
 <meta name="google-site-verification" content="s6Kbpj_5lszKWFz7pP9pFB74NobMW3n8501UIRuATcg" />
 <title>TokenBrake — see what your AI is really costing you, and stop the bleeding</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="You run several AIs at once — cloud ones burning API dollars, local ones burning electricity — and can't see any of it. TokenBrake shows every AI on your machine in one menu-bar glance, and hard-stops a runaway API bill before it happens.">
-<meta property="og:title" content="TokenBrake — a circuit breaker for your AI bill">
-<meta property="og:description" content="See every AI on your machine, in dollars and watts, in one tiny menu-bar widget. And cap a runaway API bill before it happens.">
+<meta name="description" content="A budget cap only fires once the money is gone. TokenBrake v2 spots an AI agent stuck in a loop from the shape of its traffic and stops it in seconds — $3.60 instead of $280 on one overnight runaway. Self-hosted, never stores your keys, fails open.">
+<meta property="og:title" content="TokenBrake — the runaway breaker for your AI bill">
+<meta property="og:description" content="One agent stuck in a loop overnight: $280 with a budget cap, $3.60 with TokenBrake v2. Caps act after the money is gone — this reads the shape of the traffic and trips in 10 seconds.">
 <meta property="og:type" content="website">
 <style>
   :root{--bg:#0c0d10;--panel:#15171c;--edge:#262a33;--ink:#e8eaf0;--dim:#8b93a3;--amber:#f6ad55;--red:#fc6a5d;--teal:#4fd1c5;--green:#68d391}
@@ -91,6 +91,44 @@
       </div>
     </div>
   </header>
+
+  <section id="breaker" style="background:linear-gradient(180deg,rgba(255,140,60,.05),transparent);border-top:1px solid var(--edge);border-bottom:1px solid var(--edge)">
+    <div class="kicker" style="color:var(--amber)">New in v2 — the runaway breaker</div>
+    <h2>A budget cap can't save you from 2am.</h2>
+    <p class="lead">A cap is a lagging indicator. It does nothing until the money is already gone. If an agent gets stuck in a loop overnight, the cap sits there while the loop eats the entire month's ceiling — and fires only once it's spent. That isn't the failure anyone's actually afraid of.</p>
+    <p class="lead" style="margin-top:-6px"><b>v2 watches the shape of the traffic instead.</b> One stuck agent, 02:00 to 08:00, nobody awake:</p>
+
+    <div style="overflow-x:auto;margin:22px 0 10px">
+      <table style="width:100%;border-collapse:collapse;font-size:15.5px;min-width:420px">
+        <thead><tr>
+          <th style="text-align:left;padding:10px 12px;color:var(--dim);font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--edge)"></th>
+          <th style="text-align:right;padding:10px 12px;color:var(--dim);font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--edge)">Budget cap alone</th>
+          <th style="text-align:right;padding:10px 12px;color:var(--amber);font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--edge)">Runaway breaker</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="padding:12px;border-bottom:1px solid var(--edge)">What the night cost</td>
+              <td style="padding:12px;text-align:right;border-bottom:1px solid var(--edge)"><b style="font-size:19px">$280.01</b></td>
+              <td style="padding:12px;text-align:right;border-bottom:1px solid var(--edge)"><b style="font-size:19px;color:var(--green,#3fb950)">$3.60</b></td></tr>
+          <tr><td style="padding:12px;border-bottom:1px solid var(--edge)">Calls it let through</td>
+              <td style="padding:12px;text-align:right;border-bottom:1px solid var(--edge)">23,334</td>
+              <td style="padding:12px;text-align:right;border-bottom:1px solid var(--edge)">300</td></tr>
+          <tr><td style="padding:12px">Time to act</td>
+              <td style="padding:12px;text-align:right">5.8 hours</td>
+              <td style="padding:12px;text-align:right"><b style="color:var(--green,#3fb950)">10 seconds</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="lead" style="font-size:15px;color:var(--dim)">Same cap, same prices, same loop. The only difference is that v2 recognised what it was looking at:
+      <i>“100% of 12 calls in the last 10s were the same request, at 73 calls/min. That is a stuck loop, not work.”</i></p>
+
+    <div class="two" style="margin-top:22px">
+      <div class="card"><h3>🛑 It catches the shape</h3><p>A loop running the same request over and over — including the nastier version where the conversation keeps growing but the question never changes. Plus raw dollars-per-minute, retry storms, and a surge far above what <i>that</i> agent normally does.</p></div>
+      <div class="card"><h3>✅ It leaves real work alone</h3><p>A fast batch job with 200 different prompts sails straight through. High throughput isn't a runaway — <b>repetition is.</b> A false trip costs more trust than a missed loop costs money, so it's built to be quiet.</p></div>
+      <div class="card"><h3>🔁 It heals itself</h3><p>A real circuit breaker: after the cooldown it lets <b>one</b> call through to see if the agent recovered. Recovered, it closes. Still stuck, it backs off. A false trip costs one cooldown — not a 3am phone call.</p></div>
+      <div class="card"><h3>🛡️ It fails open, always</h3><p>Every path is wrapped. If detection itself throws, your call goes through. TokenBrake is a brake, not a kill switch on your business — the only time it blocks is a trip it can explain to you in a sentence.</p></div>
+    </div>
+  </section>
 
   <section id="how">
     <h2>Two hidden costs. One place no one's ever shown them.</h2>
