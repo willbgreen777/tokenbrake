@@ -2,7 +2,10 @@
 
 **See — and stop — what the AI on your machine is really costing you.**
 
-> **Free and open source.** No license, no account, no trial — the full safety brake, unlimited agents, forever. A free tool from [Akkad Empires](https://northjule.com).
+> **Free for you. Source-available.** No account, no trial, no phone-home — the full safety
+> brake, unlimited agents. Free for individuals and for companies under 100 people and under
+> $1M revenue. Larger companies need a [commercial licence](https://tokenbrake.com/pricing) —
+> one payment, one company, no renewal. See [LICENSE](LICENSE) and [LICENSE-HISTORY.md](LICENSE-HISTORY.md).
 
 A new problem: people now run several AIs at once (cloud ones like GPT/Grok/Claude, and local
 ones like Ollama models) burning money and power in the background, and nobody can see it.

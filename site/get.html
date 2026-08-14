@@ -33,7 +33,7 @@
   <nav class="nav"><div class="logo">TOKEN<b>BRAKE</b></div><div style="display:flex;gap:16px"><a href="/pricing">Pricing</a><a href="/">← home</a></div></nav>
 
   <h1>Get TokenBrake — free</h1>
-  <p class="sub">TokenBrake is <b>free and open source</b> — everything unlocked, unlimited agents, forever. No card, no account, no signup. Download it, point one URL at it, and see every AI on your Mac: cloud dollars and local watts in one menu-bar glance, with a hard cap on a runaway API bill.</p>
+  <p class="sub">TokenBrake is <b>free and source-available</b> — everything unlocked, unlimited agents, forever, for individuals and companies under 100 people. No card, no account, no signup. Download it, point one URL at it, and see every AI on your Mac: cloud dollars and local watts in one menu-bar glance, with a hard cap on a runaway API bill.</p>
 
   <a class="dl" href="/tokenbrake-beta.zip" download>⬇ Download TokenBrake — free (.zip)</a>
   <div class="req">macOS · needs <a href="https://nodejs.org" target="_blank" rel="noopener">Node 18+</a> and the free <a href="https://swiftbar.app" target="_blank" rel="noopener">SwiftBar</a>. About 2 minutes to set up.</div>
@@ -53,9 +53,20 @@ Anthropic  →  http://localhost:8787/anthropic</code>Your API key passes straig
     <div class="step"><div class="n">6</div><div class="t"><b>Set a budget.</b> Hard = stop at the limit. Soft = warn but keep running.<code>node ~/TokenBrake/set-budget.mjs openai 20 hard</code></div></div>
   </section>
 
+  <section id="redeem">
+    <h2 style="color:var(--amber)">Already bought a commercial licence?</h2>
+    <p class="trust">Paste the licence key from your Gumroad receipt and you'll get your TokenBrake key back straight away. Lost it? Paste the same Gumroad key again — you'll always get the same one back.</p>
+    <form id="rf" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px" autocomplete="off">
+      <input id="rk" type="text" placeholder="XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX" aria-label="Gumroad licence key"
+             style="flex:1 1 340px;min-width:0;padding:12px 14px;font-size:15px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#0d1117;color:var(--ink);border:1px solid var(--edge);border-radius:8px">
+      <button type="submit" style="padding:12px 22px;font-size:15px;font-weight:600;font-family:inherit;background:var(--amber);color:#0d1117;border:0;border-radius:8px;cursor:pointer">Get my key</button>
+    </form>
+    <div id="rout" style="margin-top:14px"></div>
+  </section>
+
   <section>
-    <h2 style="color:var(--amber)">Free, forever — nothing to buy</h2>
-    <p class="trust">There's no trial clock and no license. Everything is unlocked from the moment you install it: unlimited monitored agents, spend history, CSV export, alerts, and every cap. <b>Nothing about your API traffic ever stops</b> — TokenBrake sits in front of your production calls and will never hold your pipeline hostage.</p>
+    <h2 style="color:var(--amber)">Free for you — nothing to buy</h2>
+    <p class="trust">Everything is unlocked from the moment you install it: unlimited monitored agents, spend history, CSV export, alerts, and every cap. No trial clock. <b>Free for individuals, and for any company under 100 people and under $1M revenue</b> — which is almost everyone. Larger companies need a <a href="/pricing">commercial licence</a>: one payment, one company, no renewal. <b>Nothing about your API traffic ever stops</b> — TokenBrake sits in front of your production calls and will never hold your pipeline hostage.</p>
     <p class="trust" style="margin-top:10px">TokenBrake is a free tool from <b>Akkad Empires</b>. If you like it, the best thanks is a look at the other things we make: <a href="https://northjule.com">Northjule</a> (free tools + AI-employee &amp; IT kits) and <a href="https://wrenchyard.com">Wrenchyard</a> (watch AI agents build live). The source is on <a href="https://github.com/willbgreen777/tokenbrake">GitHub</a>.</p>
   </section>
 
@@ -64,5 +75,42 @@ Anthropic  →  http://localhost:8787/anthropic</code>Your API key passes straig
     <p class="trust">🔒 <b>Never stores your API keys or your prompts.</b> The proxy forwards your key to the real provider and keeps only token counts and dollars. No cloud account, no data leaves your Mac. It's a safety brake, not a warranty — it dramatically cuts bill-shock; it can't promise a bill will never exceed a budget.</p>
   </section>
 </div>
+<script>
+// Redeem: paste a Gumroad licence key, get a TokenBrake key. All the verification happens
+// server-side against Gumroad's API — nothing here can mint anything.
+(function () {
+  var f = document.getElementById('rf'), k = document.getElementById('rk'), out = document.getElementById('rout');
+  if (!f) return;
+  var box = function (bg, brd, html) {
+    out.innerHTML = '<div style="background:' + bg + ';border:1px solid ' + brd +
+      ';border-radius:8px;padding:14px 16px;font-size:14.5px;line-height:1.55">' + html + '</div>';
+  };
+  f.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var key = (k.value || '').trim();
+    if (!key) { box('#1a1207', '#3a2a0a', 'Paste the licence key from your Gumroad receipt.'); return; }
+    box('#0d1117', '#22272e', 'Checking with Gumroad…');
+    try {
+      var r = await fetch('/api/redeem', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ key: key })
+      });
+      var j = await r.json();
+      if (!j.ok) { box('#1a0d0d', '#3a1414', (j.reason || 'That key could not be verified.')); return; }
+      box('#0b1a10', '#14361f',
+        '<b>Your TokenBrake licence key</b><br><br>' +
+        '<code style="display:block;word-break:break-all;background:#0d1117;border:1px solid #22272e;' +
+        'border-radius:6px;padding:10px;font-size:13px;margin-bottom:10px">' +
+        String(j.license).replace(/[<>&]/g, '') + '</code>' +
+        'Set it as <code>TB_LICENSE</code> and restart TokenBrake. Verification is offline — this key ' +
+        'keeps working with no internet and no phone-home, permanently. ' +
+        (j.test ? '<br><br><i>(test purchase)</i>' : ''));
+    } catch (err) {
+      box('#1a0d0d', '#3a1414', "Couldn't reach the server — try again in a moment.");
+    }
+  });
+})();
+</script>
 </body>
 </html>
