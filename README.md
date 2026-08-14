@@ -15,6 +15,56 @@ bill before it happens.
 - **Cloud AIs** cost real **API dollars.** TokenBrake meters them and can cap them.
 - **Local AIs** cost **electricity + RAM.** TokenBrake reads your machine and estimates it.
 
+---
+
+## New in v2 — the runaway breaker
+
+**A budget cap is a lagging indicator.** It does nothing until the money is already gone. If an
+agent gets stuck in a loop at 2am, the cap sits there while the loop eats the entire month's
+ceiling, and fires only once it's spent. That's not the failure people are afraid of.
+
+v2 watches the **shape** of the traffic instead, and stops a runaway in seconds:
+
+| | budget cap alone | runaway breaker |
+|---|---|---|
+| One stuck agent, 02:00–08:00 | **$280.01** | **$3.60** |
+| Calls it let through | 23,334 | 300 |
+| Time to act | 5.8 hours | **10 seconds** |
+
+Run it yourself — no keys, no network, no money: **`node demo-runaway.mjs`**
+
+### What it catches
+
+- **loop** — the same request over and over at a high rate. Catches the growing-context case
+  too: the conversation keeps getting longer but the question never changes.
+- **burn** — dollars per minute over a hard ceiling, whatever the pattern.
+- **error_storm** — most calls failing while retrying without backing off.
+- **surge** — far above what *this* agent normally does, against a baseline it learned itself.
+
+### What it deliberately does not catch
+
+A fast batch job with 200 different prompts. High throughput isn't a runaway — **repetition** is.
+That asymmetry is the whole design: a false trip costs more trust than a missed loop costs money,
+and the budget cap still backstops the slow case.
+
+### It's a real circuit breaker
+
+`closed → open → half_open → closed`. After the cooldown it lets **one** call through to see if
+the agent recovered. Recovered, it closes itself. Still stuck, it re-opens and backs off
+exponentially. A false trip costs you one cooldown and then heals — no human, no restart, no
+ripping it out at 3am.
+
+```bash
+node reset.mjs --status      # what's tripped, why, and what it estimates it stopped
+node reset.mjs my-agent      # manual override — always available
+TB_BREAKER=watch node proxy.mjs   # detect and record, never block
+TB_BREAKER=off   node proxy.mjs   # disable entirely
+```
+
+**Fail-open is absolute.** Every path is wrapped. If detection throws, the call goes through.
+TokenBrake is a brake, not a kill switch on your business — the only time it blocks is a trip it
+can explain to you in a sentence.
+
 Everything runs on YOUR machine. No account, no cloud, no data leaves except the API calls
 themselves going to their real provider.
 
