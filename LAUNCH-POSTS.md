@@ -196,3 +196,41 @@ flaw by a stranger is worth more than ten people saying "nice."
 
 **If it sinks without a trace:** that's the normal outcome, not a verdict. Most posts do. We'd try
 a different forum and a different angle, and it costs another hour.
+
+---
+
+## The early-adopter discount — FIRST10
+
+**Code:** `FIRST10` · **40% off** · **10 uses, then it's dead** · $249 → **$149.40**
+
+Direct link that applies it automatically:
+`https://northjule.gumroad.com/l/tokenbrake/FIRST10`
+
+It's also on the pricing page now, so anyone who lands there sees it without you
+having to mention it.
+
+**Where NOT to use it: the Reddit posts.**
+
+I want to be straight about why, because it's tempting. Nearly everyone in
+r/LocalLLaMA and r/selfhosted is under 100 people and under $1M revenue — the
+licence is free for them. Waving a discount at people who don't owe you anything
+reads as a sales pitch, and those two forums punish that specifically. The posts
+work because they're a person showing a thing they built. Leave them that way.
+
+**Where to use it instead:**
+
+1. **In a reply, when someone says they're at a bigger company.** Something like:
+   *"It's free under 100 people — sounds like you'd be over that. There's a
+   FIRST10 code on the pricing page that takes the licence to $149 for the first
+   ten, if it's useful."* That's an answer to their question, not an ad.
+
+2. **Direct email or DM** to a company that would actually owe the licence.
+
+3. **If the post takes off** and people start asking about commercial use in the
+   comments — then one top-level comment mentioning it is fair game.
+
+**Why 40% and why ten:** the honest reason is that nobody has bought this yet,
+and an early customer of a two-week-old product is taking a real risk. The
+discount prices that risk instead of pretending it isn't there. When the ten are
+gone, the price is $249 and stays there — no perpetual "sale," because that trick
+is transparent and it cheapens the product.
