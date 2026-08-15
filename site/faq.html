@@ -34,14 +34,14 @@
 {"@type":"Question","name":"Does TokenBrake store my API keys or prompts?","acceptedAnswer":{"@type":"Answer","text":"No. TokenBrake runs on your own server. Your provider API key passes straight through to the provider and is never stored, logged, or written anywhere. It keeps only token counts and dollar amounts — never your prompts or responses."}},
 {"@type":"Question","name":"How is this different from OpenAI, Claude, or Gemini's own spending limits?","acceptedAnswer":{"@type":"Answer","text":"Native limits are account- or workspace-wide and reconcile on a monthly cycle: OpenAI's can lag up to 24 hours, Anthropic calls its spend reading 'informational, not transactional,' and Gemini's cap is account-wide and lets up to 10 minutes of overage through. TokenBrake meters every call in real time, per agent, and hard-stops the next call at your budget."}},
 {"@type":"Question","name":"Which AI providers does TokenBrake support?","acceptedAnswer":{"@type":"Answer","text":"OpenAI, Anthropic (Claude), xAI (Grok), Groq, DeepSeek, Mistral, Google Gemini, and OpenRouter — including streaming and prompt caching."}},
-{"@type":"Question","name":"Is TokenBrake priced per device or per user?","acceptedAnswer":{"@type":"Answer","text":"Neither — it's priced by monitored agent. An 'agent' is one labeled stream of AI usage you route through TokenBrake (a bot, a script, a project), regardless of the device it runs on. It's free, with no limit on how many you monitor."}},
+{"@type":"Question","name":"Is TokenBrake priced per device or per user?","acceptedAnswer":{"@type":"Answer","text":"Neither — it's priced by monitored agent. An 'agent' is one labeled stream of AI usage you route through TokenBrake (a bot, a script, a project), regardless of the device it runs on. There is no limit on how many you monitor and no per-agent charge — the only thing you can ever buy is one commercial licence for the whole company."}},
 {"@type":"Question","name":"Does it work with phones?","acceptedAnswer":{"@type":"Answer","text":"Yes for any app or agent whose API base URL you control — laptop, server, or phone. It cannot meter consumer chat apps like the ChatGPT or Claude mobile apps, which bill through the vendor and can't be proxied by anyone."}},
-{"@type":"Question","name":"Is TokenBrake free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely. TokenBrake is free and open source, everything unlocked, unlimited agents, forever. No license, no account, no trial clock. It's a free tool from Akkad Empires."}},
-{"@type":"Question","name":"Is there a catch?","acceptedAnswer":{"@type":"Answer","text":"No. TokenBrake is free and open source with nothing held back. It never stops your traffic and never expires — the safety brake is permanent."}},
-{"@type":"Question","name":"Can my AI agent operate TokenBrake?","acceptedAnswer":{"@type":"Answer","text":"Yes. TokenBrake serves a machine-readable manifest at /agent.json that any AI agent can read to discover how to check the meter, set budgets, and set alerts. It also ships an MCP server so tools like Claude Desktop and Cursor see TokenBrake as native tools."}},
+{"@type":"Question","name":"Is TokenBrake free?","acceptedAnswer":{"@type":"Answer","text":"Free for individuals and for any company under 100 people and under $1M revenue, which is almost everyone — everything unlocked, unlimited agents, no trial clock. Larger companies buy a one-time commercial licence. It is source-available rather than open source."}},
+{"@type":"Question","name":"Is there a catch?","acceptedAnswer":{"@type":"Answer","text":"Nothing is held back and nothing expires — every feature is in the free version and the safety brake is permanent. The honest caveats: it is source-available rather than open source, and companies over 100 people or $1M revenue need a paid licence."}},
+{"@type":"Question","name":"What does the runaway breaker actually do?","acceptedAnswer":{"@type":"Answer","text":"It watches the shape of your traffic rather than the total. A stuck agent sends the same request over and over; a real batch job sends different ones. When repetition and rate are both high it opens a circuit breaker in seconds instead of waiting for a budget cap to be reached. Run node demo-runaway.mjs to see it: a simulated agent stuck overnight costs $280.01 with a budget cap alone and $3.60 with the breaker."}},
 {"@type":"Question","name":"How do I install it?","acceptedAnswer":{"@type":"Answer","text":"Download tokenbrake-beta.zip from tokenbrake.com/get, unzip it to ~/TokenBrake, and run node proxy.mjs. Zero dependencies, needs Node 24+. The runaway breaker is on by default and can be set to watch-only or disabled."}},
 {"@type":"Question","name":"Will TokenBrake break my app if it fails?","acceptedAnswer":{"@type":"Answer","text":"No. If TokenBrake itself faults, it fails open and lets the call through rather than break your production. It's a safety brake that dramatically reduces bill-shock, not a warranty that a bill can never exceed a budget — keep your provider-side limits on too."}},
-{"@type":"Question","name":"Is it secure?","acceptedAnswer":{"@type":"Answer","text":"It runs on your own infrastructure, requires a shared secret (TB_KEY) on every request compared in constant time, only forwards to an allowlist of provider hosts (SSRF-guarded), caps request sizes, and never stores your keys or prompts."}}
+{"@type":"Question","name":"Is it secure?","acceptedAnswer":{"@type":"Answer","text":"It binds to 127.0.0.1 and is reachable only from your own machine, forwards only to an allowlist of provider hosts with any smuggled scheme or host stripped (SSRF-guarded), and never stores your API keys or your prompts — only hashes, and only for loop detection."}}
 ]}
 </script>
 </head>
@@ -64,19 +64,20 @@
   <p>OpenAI, Anthropic (Claude), xAI (Grok), Groq, DeepSeek, Mistral, Google Gemini, and OpenRouter — including streaming and prompt caching. More on the roadmap; email us to bump one up.</p></div>
 
 <div class="q"><h2>Is TokenBrake priced per device or per user?</h2>
-  <p>Neither — it's priced by <strong>monitored agent</strong>. An "agent" is one labeled stream of AI usage you route through TokenBrake (a bot, a script, a project), regardless of the device it runs on. There's no limit and no cost — monitor as many as you like, <a href="/pricing">free</a>.</p></div>
+  <p>Neither. An "agent" is one labeled stream of AI usage you route through TokenBrake (a bot, a script, a project), regardless of the device it runs on — and there is no limit on how many you monitor and no per-agent charge. The only thing you can ever buy is <a href="/pricing">one commercial licence</a>, once, for the whole company.</p></div>
 
 <div class="q"><h2>Does it work with phones?</h2>
   <p>Yes for any app or agent whose API base URL you control — laptop, server, or phone. It <em>cannot</em> meter consumer chat apps like the ChatGPT or Claude mobile apps, which bill through the vendor and can't be proxied by anyone. It's for the API-based AI your business runs, not a way to track someone's personal chat-app use.</p></div>
 
 <div class="q"><h2>Is TokenBrake free?</h2>
-  <p>Yes, completely. TokenBrake is <strong>free and open source</strong> — everything unlocked, unlimited agents, forever. No license, no account, no trial clock. It's a free tool from <strong>Akkad Empires</strong>; the <a href="/pricing">pricing page</a> just says so out loud.</p></div>
+  <p><strong>Free for individuals, and for any company under 100 people and under $1M revenue</strong> — which is almost everyone. Everything unlocked, unlimited agents, no trial clock. Larger companies buy a one-time <a href="/pricing">commercial licence</a>. The source is public and readable; the licence is PolyForm Small Business rather than open source.</p></div>
 
 <div class="q"><h2>Is there a catch?</h2>
-  <p>No. Nothing is held back and nothing expires — the safety brake is permanent, and your traffic is never interrupted. If you find it useful, the best thanks is a look at our other work: <a href="https://northjule.com">Northjule</a> and <a href="https://wrenchyard.com">Wrenchyard</a>.</p></div>
+  <p>Nothing is held back and nothing expires — every feature is in the free version, the safety brake is permanent, and your traffic is never interrupted. The two things worth saying out loud: it is <strong>source-available, not open source</strong>, and companies over 100 people or $1M revenue need a <a href="/pricing">paid licence</a>. Both are on this page rather than in the small print.</p></div>
 
-<div class="q"><h2>Can my AI agent operate TokenBrake?</h2>
-  <p>Yes. TokenBrake serves a machine-readable manifest at <code>/agent.json</code> that any AI agent can read to discover how to check the meter, set budgets, and set alerts. It also ships an <strong>MCP server</strong> so tools like Claude Desktop and Cursor see TokenBrake as native tools. See the <a href="/docs">docs</a>.</p></div>
+<div class="q"><h2>What does the runaway breaker actually do?</h2>
+  <p>It watches the <em>shape</em> of your traffic rather than the total. A stuck agent sends the same request over and over; a real batch job sends different ones. When repetition <em>and</em> rate are both high, it opens a circuit breaker in seconds rather than waiting for a budget cap to be reached — and a budget cap can't act until the money is already gone.</p>
+  <p>You don't have to take our word for it: <code>node demo-runaway.mjs</code> simulates one agent stuck from 02:00 to 08:00 with nobody awake. Budget cap alone: <strong>$280.01</strong>. Breaker: <strong>$3.60</strong>, tripped in 10 seconds. No API keys, no network, no money — it runs against the real detection code.</p></div>
 
 <div class="q"><h2>How do I install it?</h2>
   <p>Download <a href="/tokenbrake-beta.zip">tokenbrake-beta.zip</a>, unzip it to <code>~/TokenBrake</code>, and run <code>node proxy.mjs</code>. Zero dependencies, needs Node 24+. Full steps in the <a href="/docs">docs</a>.</p></div>
@@ -85,7 +86,7 @@
   <p>No. If TokenBrake itself faults, it fails open and lets the call through rather than break your production. It's a safety brake that dramatically reduces bill-shock — not a warranty that a bill can never exceed a budget. Keep your provider-side limits on too.</p></div>
 
 <div class="q"><h2>Is it secure?</h2>
-  <p>It runs on your own infrastructure, requires a shared secret (<code>TB_KEY</code>) on every request compared in constant time, only forwards to an allowlist of provider hosts (SSRF-guarded), caps request sizes to resist abuse, and never stores your keys or prompts.</p></div>
+  <p>It binds to <code>127.0.0.1</code>, so it is reachable only from your own machine — there is no network surface to secure and no shared secret to leak. It forwards only to an <strong>allowlist</strong> of provider hosts, stripping any scheme or host a caller tries to smuggle into the path (SSRF-guarded). It never stores your API keys or your prompts — the loop detection works on hashes, never on the text.</p></div>
 
 <div class="cta">
   <strong>Still deciding? Do the math.</strong>
@@ -95,6 +96,6 @@
 
 <div class="foot">
   <a href="/">Home</a><a href="/guides">Guides</a><a href="/calculator">Calculator</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a><br><br>
-  TokenBrake — a circuit breaker for your AI bill · an Akkad Empires product.
+  TokenBrake — a circuit breaker for your AI bill · a Northjule product.
 </div>
 </div></body></html>

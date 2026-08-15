@@ -41,7 +41,7 @@ Skip: giant enterprises (long sales cycles) and pure consumers.
 >
 > Worth a 5-minute look? You can size up your own exposure here: **tokenbrake.com/calculator**
 >
-> — [Your name], Akkad Empires
+> — [Your name], Northjule
 
 ---
 

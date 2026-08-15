@@ -92,7 +92,7 @@ async function sendReceipt(to, { license, plan, paid, expires }) {
     <p>Activate it by setting <code>TB_LICENSE</code> on your TokenBrake server and restarting. Full steps: <a href="https://tokenbrake.com/docs">tokenbrake.com/docs</a></p>
     <p style="color:#555;font-size:14px">Paid: $${paid} USDC · Valid through: ${expires}<br>
     Lost this key? Re-enter your payment transaction at <a href="https://tokenbrake.com/pricing">tokenbrake.com/pricing</a> and you'll get the same key back.</p>
-    <p style="color:#888;font-size:12px">TokenBrake — an Akkad Empires product.</p></div>`;
+    <p style="color:#888;font-size:12px">TokenBrake — a Northjule product.</p></div>`;
   const payload = { from: FROM, to: [to], subject: `Your TokenBrake ${plan} license key`, html };
   if (notify) payload.bcc = [notify];
   const r = await fetch("https://api.resend.com/emails", {

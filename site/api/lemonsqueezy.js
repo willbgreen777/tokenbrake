@@ -133,7 +133,7 @@ async function sendKey(to, { licence, plan, expires, orderId }) {
     '<p>Activate it by setting <code>TB_LICENSE</code> on your TokenBrake server and restarting. Full steps: <a href="https://tokenbrake.com/docs">tokenbrake.com/docs</a></p>' +
     '<p style="color:#555;font-size:14px">Valid through: ' + expires + ' &middot; Order: ' + orderId + '<br>' +
     'Lost this key? Reply with your order number and we will send it again - it is the same key every time.</p>' +
-    '<p style="color:#888;font-size:12px">TokenBrake - an Akkad Empires product.</p></div>';
+    '<p style="color:#888;font-size:12px">TokenBrake - a Northjule product.</p></div>';
   const payload = { from: FROM, to: [to], subject: "Your TokenBrake " + plan + " licence key", html };
   if (notify) payload.bcc = [notify];
   const r = await fetch("https://api.resend.com/emails", {

@@ -114,25 +114,31 @@ clear message instead of a surprise invoice.
 
 ## Files
 ```
-lib/pricing.js   model price book (+ caching)
-lib/meter.js     usage → cost, and the hard/soft cap decision
+lib/runaway.js     runaway detection — fingerprints, window, the four signals
+lib/breaker.js     the circuit breaker itself: closed / open / half-open
+lib/pricing.js     model price book (+ caching)
+lib/meter.js       usage → cost, and the hard/soft cap decision
 lib/proxy-core.js  SSRF guard, key hygiene, request transform
-lib/stream.js    pull usage out of streamed responses
-lib/local.js     find local models, estimate watts/RAM
-lib/store.js     local per-agent ledger (~/.tokenbrake/ledger.json)
-proxy.mjs        the local metering proxy
-report.mjs       the menu-bar widget output
-set-budget.mjs   set a per-agent budget + mode
-swiftbar/        the SwiftBar plugin
-test.mjs         the test suite
+lib/stream.js      pull usage out of streamed responses
+lib/local.js       find local models, estimate watts/RAM
+lib/store.js       local per-agent ledger (~/.tokenbrake/ledger.json)
+lib/ledger.js      per-agent roll-up: spend, calls, tokens, budget
+proxy.mjs          the local metering proxy — this is what you run
+reset.mjs          clear a tripped breaker, or see what tripped
+set-budget.mjs     set a per-agent budget + mode
+report.mjs         the menu-bar widget output
+swiftbar/          the SwiftBar plugin
+demo-runaway.mjs   simulate a stuck agent overnight — no keys, no network
+test.mjs           81 metering & pricing tests
+test-runaway.mjs   47 detection & breaker tests
 ```
 
-## Free & open source
+## Licence — source-available, not open source
 
-TokenBrake is free, MIT-licensed, and made by **Akkad Empires**. There's nothing to buy and no license key — every feature is unlocked. If it saves you from one surprise invoice, that's the whole point.
+TokenBrake is made by **Northjule** and released under [PolyForm Small Business 1.0.0](https://polyformproject.org/licenses/small-business/1.0.0/).
 
-More free things we make:
-- **[Northjule](https://northjule.com)** — free tools plus ready-to-run AI-employee and IT toolkits.
-- **[Wrenchyard](https://wrenchyard.com)** — a live foundry where autonomous AI agents build in the open.
+It is **free to use, including at work**, for individuals and for any company under 100 people and under $1M revenue — every feature unlocked, no trial clock, nothing held back. Companies above that threshold buy one [commercial licence](https://tokenbrake.com/pricing), once: $249, one company, unlimited machines and agents, no renewal.
 
-Contributions and issues welcome on [GitHub](https://github.com/willbgreen777/tokenbrake).
+That is not an OSI open-source licence, and we'd rather say so here than have you find out later. It was MIT for two weeks before anyone had adopted it; [LICENSE-HISTORY.md](LICENSE-HISTORY.md) explains exactly what changed and why, and the MIT release stays MIT forever.
+
+Issues welcome on [GitHub](https://github.com/willbgreen777/tokenbrake).

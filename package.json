@@ -1,7 +1,16 @@
 {
   "name": "tokenbrake",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "A circuit breaker for your AI API bill — drop-in proxy that meters spend and hard-stops at your budget."
+  "description": "A circuit breaker for your AI API bill — drop-in proxy that meters spend, hard-stops at your budget, and catches a runaway agent from the shape of its traffic in seconds.",
+  "license": "SEE LICENSE IN LICENSE",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node proxy.mjs",
+    "demo": "node demo-runaway.mjs",
+    "test": "node test.mjs && node test-runaway.mjs"
+  }
 }

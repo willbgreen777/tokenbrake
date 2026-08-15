@@ -192,6 +192,6 @@ server.listen(PORT, () => {
   console.log(`  dashboard: http://localhost:${PORT}/   ·   proxy: /openai /anthropic /xai /groq /deepseek /mistral /gemini /openrouter`);
   console.log(KEY ? "  secured with TB_KEY ✓" : "  ⚠ TB_KEY not set — open to anyone. Set TB_KEY before exposing this.");
   const seatTxt = PLAN.seats > 0 ? `${PLAN.seats} agent${PLAN.seats === 1 ? "" : "s"}` : "unlimited agents";
-  console.log(`  plan: free & unlimited — everything unlocked, forever (${seatTxt}). A free tool from Akkad Empires.`);
+  console.log(`  plan: free & unlimited — everything unlocked, forever (${seatTxt}). A free tool from Northjule.`);
   console.log(`  more free tools: https://northjule.com   ·   watch AI agents build live: https://wrenchyard.com`);
 });

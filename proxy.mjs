@@ -142,6 +142,6 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, "127.0.0.1", () => {
   console.log(`TokenBrake proxy live → http://localhost:${PORT}  (point your AI's base URL here: /openai or /anthropic)`);
   console.log(`  runaway breaker: ${BREAKER_MODE.toUpperCase()}  ·  state: http://localhost:${PORT}/breaker  ·  TB_BREAKER=watch to observe only, =off to disable`);
-  console.log("  free for individuals and companies under 100 people. An Akkad Empires product.");
+  console.log("  free for individuals and companies under 100 people. A Northjule product.");
   console.log("  more free tools: https://northjule.com   ·   watch AI agents build live: https://wrenchyard.com");
 });
