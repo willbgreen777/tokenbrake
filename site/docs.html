@@ -51,10 +51,13 @@
 
   <h2 id="run">1. Run the server</h2>
   <p>TokenBrake Server runs on your own machine or a small box you control. Three ways, fastest first.</p>
-  <h3>One line (recommended)</h3>
-  <p>Downloads a single zero-dependency file (needs Node 24+) and prints your key + start command:</p>
-  <pre>curl -fsSL https://tokenbrake.com/install.sh | sh</pre>
-  <p>Prefer to grab the file yourself? Download <a href="/tokenbrake-server.mjs">tokenbrake-server.mjs</a> and run <code>TB_KEY=your-secret node tokenbrake-server.mjs</code>. That's the whole server — one file, nothing to install.</p>
+  <h3>Download and run (recommended)</h3>
+  <p>One zip, zero dependencies, needs Node 24+. This is the same download as everywhere else on the site — there is deliberately only one.</p>
+  <pre>Download: <a href="/tokenbrake-beta.zip">tokenbrake-beta.zip</a>
+unzip it into your home folder so it lands at ~/TokenBrake
+cd ~/TokenBrake && node proxy.mjs</pre>
+  <p>Then point your AI's base URL at <code>http://localhost:8787/openai</code> (or <code>/anthropic</code>). The runaway breaker is on by default — <code>TB_BREAKER=watch</code> to observe without blocking, <code>TB_BREAKER=off</code> to disable.</p>
+  <p>Want to see the breaker work before you trust it with anything? <code>node demo-runaway.mjs</code> simulates a stuck agent overnight — no API keys, no network, no money. And <code>node test-runaway.mjs</code> runs the 47 detection tests so you can check the claims yourself rather than taking our word for it.</p>
   <h3>With Docker</h3>
   <pre>docker run -d --name tokenbrake \
   -p 8788:8788 \

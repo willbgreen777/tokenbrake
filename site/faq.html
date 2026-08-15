@@ -39,7 +39,7 @@
 {"@type":"Question","name":"Is TokenBrake free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely. TokenBrake is free and open source, everything unlocked, unlimited agents, forever. No license, no account, no trial clock. It's a free tool from Akkad Empires."}},
 {"@type":"Question","name":"Is there a catch?","acceptedAnswer":{"@type":"Answer","text":"No. TokenBrake is free and open source with nothing held back. It never stops your traffic and never expires — the safety brake is permanent."}},
 {"@type":"Question","name":"Can my AI agent operate TokenBrake?","acceptedAnswer":{"@type":"Answer","text":"Yes. TokenBrake serves a machine-readable manifest at /agent.json that any AI agent can read to discover how to check the meter, set budgets, and set alerts. It also ships an MCP server so tools like Claude Desktop and Cursor see TokenBrake as native tools."}},
-{"@type":"Question","name":"How do I install it?","acceptedAnswer":{"@type":"Answer","text":"One line: curl -fsSL https://tokenbrake.com/install.sh | sh. It's a single zero-dependency file that runs on Node 24+ (built-in SQLite) — no database and no Docker required. Docker and from-source options are also available."}},
+{"@type":"Question","name":"How do I install it?","acceptedAnswer":{"@type":"Answer","text":"Download tokenbrake-beta.zip from tokenbrake.com/get, unzip it to ~/TokenBrake, and run node proxy.mjs. Zero dependencies, needs Node 24+. The runaway breaker is on by default and can be set to watch-only or disabled."}},
 {"@type":"Question","name":"Will TokenBrake break my app if it fails?","acceptedAnswer":{"@type":"Answer","text":"No. If TokenBrake itself faults, it fails open and lets the call through rather than break your production. It's a safety brake that dramatically reduces bill-shock, not a warranty that a bill can never exceed a budget — keep your provider-side limits on too."}},
 {"@type":"Question","name":"Is it secure?","acceptedAnswer":{"@type":"Answer","text":"It runs on your own infrastructure, requires a shared secret (TB_KEY) on every request compared in constant time, only forwards to an allowlist of provider hosts (SSRF-guarded), caps request sizes, and never stores your keys or prompts."}}
 ]}
@@ -79,7 +79,7 @@
   <p>Yes. TokenBrake serves a machine-readable manifest at <code>/agent.json</code> that any AI agent can read to discover how to check the meter, set budgets, and set alerts. It also ships an <strong>MCP server</strong> so tools like Claude Desktop and Cursor see TokenBrake as native tools. See the <a href="/docs">docs</a>.</p></div>
 
 <div class="q"><h2>How do I install it?</h2>
-  <p>One line: <code>curl -fsSL https://tokenbrake.com/install.sh | sh</code>. It's a single zero-dependency file that runs on Node 24+ (built-in SQLite) — no database and no Docker required. Docker and from-source options are in the <a href="/docs">docs</a>.</p></div>
+  <p>Download <a href="/tokenbrake-beta.zip">tokenbrake-beta.zip</a>, unzip it to <code>~/TokenBrake</code>, and run <code>node proxy.mjs</code>. Zero dependencies, needs Node 24+. Full steps in the <a href="/docs">docs</a>.</p></div>
 
 <div class="q"><h2>Will TokenBrake break my app if it fails?</h2>
   <p>No. If TokenBrake itself faults, it fails open and lets the call through rather than break your production. It's a safety brake that dramatically reduces bill-shock — not a warranty that a bill can never exceed a budget. Keep your provider-side limits on too.</p></div>
