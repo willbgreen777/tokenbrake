@@ -67,8 +67,9 @@ cd ~/TokenBrake && node proxy.mjs</pre>
   <h3>See the breaker work before you trust it</h3>
   <p>Two commands, no API keys, no network, no money — both run against the same detection code that guards your traffic:</p>
   <pre>node demo-runaway.mjs      # simulates one agent stuck 02:00–08:00, nobody awake
-node test-runaway.mjs      # the 47 detection tests
-node test.mjs              # the 81 metering &amp; pricing tests</pre>
+node test-runaway.mjs      # 47 detection &amp; breaker tests
+node test.mjs              # 100 metering &amp; pricing tests
+node test-license.mjs      # 29 licence-verification tests</pre>
   <p>The demo prints the comparison the whole product exists for: <strong>$280.01</strong> with a budget cap alone (23,334 calls, acted after 5.8 hours) versus <strong>$3.60</strong> with the breaker (300 calls, tripped in 10 seconds).</p>
 
   <h2 id="point">2. Point your AI at it</h2>
@@ -167,6 +168,11 @@ client = OpenAI(
   <p>The proxy forwards only to this allowlist, and strips any scheme or host a caller tries to smuggle into the path. Anything else is refused rather than fetched.</p>
   <div class="box tip"><p>Pricing is estimated from provider-published rates and <strong>rounds up when uncertain</strong>, so a cap can't be quietly slipped. It's a safety brake, not a billing system of record — keep your provider-side limits on too.</p></div>
 
+  <h3>How we keep the price book honest</h3>
+  <p>A metering tool with stale prices is worse than no metering tool, because it's confidently wrong. So the price table carries the date a human last checked it against every provider's published pricing page, and <code>test.mjs</code> <strong>fails</strong> once that date is more than 90 days old. You can see both for yourself:</p>
+  <pre>node -e "import('./lib/pricing.js').then(p=>console.log(p.VERIFIED_ON, p.priceBookAgeDays()+' days old'))"</pre>
+  <p>Two known limits, stated rather than buried. <strong>Long-context tiers aren't modelled:</strong> OpenAI, Gemini and xAI all charge roughly double past a context threshold, and the table holds one rate per model — so very large-context calls <em>under</em>-estimate. <strong>Time-of-day pricing isn't modelled either:</strong> DeepSeek bills differently at peak and off-peak. Everywhere else the rule holds — when we're unsure, we round up, and an unrecognised model bills at the highest rate we know of rather than a comfortable guess.</p>
+
   <h2 id="env">7. Every setting</h2>
   <p>There is no config file. Everything is an environment variable, and every one of them is optional.</p>
   <table>
@@ -181,10 +187,22 @@ client = OpenAI(
   <p>TokenBrake is <strong>source-available</strong>, under <a href="https://polyformproject.org/licenses/small-business/1.0.0/">PolyForm Small Business 1.0.0</a>. It's free to use — including at work — for individuals and for any company under 100 people and under $1M revenue. That covers almost everyone, and nothing is held back in the free version: no trial clock, no locked features, no key to enter.</p>
   <p>Companies above that threshold buy <strong>one commercial licence, once</strong> — $249, one company, unlimited machines and agents, no renewal. <a href="/pricing">Pricing</a> has the details.</p>
   <h3>Redeeming a purchase</h3>
-  <p>Buy on Gumroad, and you'll get a licence key on the receipt and by email. Paste it at <a href="/get">tokenbrake.com/get</a> and you'll get your TokenBrake key straight back.</p>
+  <p>Buy on Gumroad, and you'll get a licence key on the receipt and by email. Paste it at <a href="/get">tokenbrake.com/get</a> and you'll get your TokenBrake key straight back. Set it as <code>TB_LICENSE</code> and restart:</p>
+  <pre>TB_LICENSE="TB-…" node proxy.mjs
+
+TokenBrake proxy live → http://localhost:8787
+  runaway breaker: GUARD
+  commercial licence: VALID · business · ref 9f2a1c4e7b8d · perpetual</pre>
+  <p>It also appears at <code>/health</code>, as JSON, so you can point a monitoring check or an auditor at it.</p>
+
+  <div class="box warn"><p><strong>Be clear about what that key is — it's proof, not a lock.</strong></p>
+  <p>Nothing in TokenBrake is gated behind a licence. Every feature works in the free version, and the key is never consulted while your traffic is flowing. Setting it changes one line of startup output and one field in <code>/health</code>, and nothing else. An unlicensed install and a licensed one behave identically.</p>
+  <p>That is on purpose. This software sits in front of your production API calls. The day it starts refusing work over a licensing question is the day it stops being safe to install — so it never will. We would rather a company that owes us $249 quietly not pay than have one that <em>did</em> pay get woken at 3am by our licence check.</p>
+  <p>What the key gives you is the thing a company over the threshold actually needs: something verifiable to show that your use is licensed.</p></div>
+
   <h3>Lost your key?</h3>
   <p><strong>Paste the same Gumroad key again.</strong> Your TokenBrake key is derived from your purchase rather than looked up in a database, so the same purchase always returns the same key. There is no support ticket to raise and no account to recover.</p>
-  <div class="box tip"><p><strong>Verification is offline and permanent.</strong> TokenBrake never phones home, never needs network at start-up, and your licence keeps working whether or not we're still here. Gumroad is the till, not the lock.</p></div>
+  <div class="box tip"><p><strong>Verification is offline and permanent.</strong> The key is signed with Ed25519; TokenBrake carries only the public half, which can check a signature and never create one. So verification needs no network, ever — and your licence keeps working whether or not we're still here. Gumroad is the till, not the lock.</p></div>
 
   <div class="foot">
     <a href="/">Home</a><a href="/pricing">Pricing</a><a href="/faq">FAQ</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a><br><br>

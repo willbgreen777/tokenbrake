@@ -103,8 +103,13 @@ Anthropic  →  http://localhost:8787/anthropic</code>Your API key passes straig
         '<code style="display:block;word-break:break-all;background:#0d1117;border:1px solid #22272e;' +
         'border-radius:6px;padding:10px;font-size:13px;margin-bottom:10px">' +
         String(j.license).replace(/[<>&]/g, '') + '</code>' +
-        'Set it as <code>TB_LICENSE</code> and restart TokenBrake. Verification is offline — this key ' +
-        'keeps working with no internet and no phone-home, permanently. ' +
+        'Set it as <code>TB_LICENSE</code> and restart. TokenBrake will confirm it on the startup ' +
+        'line and at <code>/health</code>, so you have something to show whoever asks.<br><br>' +
+        '<b>What this key is:</b> proof your company is licensed. It is deliberately <i>not</i> an ' +
+        'unlock — nothing about TokenBrake is gated behind it, and it is never consulted while your ' +
+        'traffic is flowing. We would rather someone quietly not pay than have a paying customer ' +
+        'woken at 3am by our licence check. Verification is offline and permanent: it works with no ' +
+        'internet, no phone-home, and keeps working if we disappear. ' +
         (j.test ? '<br><br><i>(test purchase)</i>' : ''));
     } catch (err) {
       box('#1a0d0d', '#3a1414', "Couldn't reach the server — try again in a moment.");

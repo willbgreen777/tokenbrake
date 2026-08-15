@@ -11,7 +11,7 @@ import { resolveUpstream, transformRequest, forwardHeaders, capResponse } from "
 import { costFromResponse, gate } from "../lib/meter.js";
 import { usageFromStream } from "../lib/stream.js";
 import { getAgent, record, setBudget, allAgents, setAlerts, setWebhook, getWebhook, historyFor, exportHistory } from "./db.mjs";
-import { verifyLicense, seatsForTier } from "../lib/license.js";
+// (licence imports removed — this server hardcodes the free plan below and never checks a key)
 
 const __dir = dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.TB_PORT) || 8788;

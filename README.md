@@ -103,7 +103,7 @@ clear message instead of a surprise invoice.
 ## How it's built (and why it's safe)
 
 - **Engine** (`lib/`): prices every major OpenAI + Anthropic model (incl. prompt-caching),
-  meters streaming and non-streaming calls, and makes the cap decision. 34 tests, all passing
+  meters streaming and non-streaming calls, and makes the cap decision. 176 tests, all passing
   (`node test.mjs`).
 - **Security** (`SECURITY.md`): the proxy only ever forwards to an allowlist of provider hosts
   (no open relay), never stores your API key or your prompts, and fails *open* so it can't take
@@ -129,8 +129,9 @@ set-budget.mjs     set a per-agent budget + mode
 report.mjs         the menu-bar widget output
 swiftbar/          the SwiftBar plugin
 demo-runaway.mjs   simulate a stuck agent overnight — no keys, no network
-test.mjs           81 metering & pricing tests
+test.mjs           100 metering & pricing tests (incl. a price-book staleness guard)
 test-runaway.mjs   47 detection & breaker tests
+test-license.mjs   29 licence-verification tests
 ```
 
 ## Licence — source-available, not open source

@@ -8,6 +8,7 @@ import { costFromResponse, gate } from "./lib/meter.js";
 import { usageFromStream } from "./lib/stream.js";
 import { loadStore, recordSpend } from "./lib/store.js";
 import { Fleet, breakerResponse } from "./lib/breaker.js";
+import { licenseStatus } from "./lib/license.js";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -22,6 +23,12 @@ const json = (res, status, obj, extra = {}) => { res.writeHead(status, { "conten
 // One breaker per agent. Mode comes from the environment so it can be turned down to
 // observe-only without touching code: TB_BREAKER=watch (or =off to disable entirely).
 const BREAKER_MODE = String(process.env.TB_BREAKER || "guard").toLowerCase();
+
+// Commercial licence — read ONCE at start-up, reported, and never consulted again. Deliberately
+// not part of any request path: see the long note at the top of lib/license.js. A company over
+// the PolyForm threshold sets TB_LICENSE so it can prove entitlement; nothing here behaves
+// differently either way, and a bad key is a printed warning, never a refusal.
+const LICENSE = (() => { try { return licenseStatus(); } catch { return { licensed: false, set: false, line: "commercial licence: check skipped" }; } })();
 const fleet = new Fleet({
   mode: BREAKER_MODE === "watch" ? "watch" : "guard",
   burnPerMin: Number(process.env.TB_BURN_PER_MIN) || undefined,
@@ -51,7 +58,14 @@ const server = http.createServer(async (req, res) => {
   if (path === "/" || path === "/health") {
     const s = loadStore();
     const total = Object.values(s.agents).reduce((n, a) => n + (a.spend || 0), 0);
-    return json(res, 200, { ok: true, service: "TokenBrake local proxy", period: s.period, cloud_spend: Number(total.toFixed(4)), usage: "point your AI's base URL at http://localhost:" + PORT + "/openai or /anthropic" });
+    return json(res, 200, {
+      ok: true, service: "TokenBrake local proxy", period: s.period,
+      cloud_spend: Number(total.toFixed(4)),
+      // Entitlement, for whoever has to evidence it. Reporting only — nothing here gates traffic.
+      license: { licensed: LICENSE.licensed, tier: LICENSE.tier || null, ref: LICENSE.ref || null,
+                 perpetual: LICENSE.perpetual ?? null, note: LICENSE.line },
+      usage: "point your AI's base URL at http://localhost:" + PORT + "/openai or /anthropic",
+    });
   }
 
   // Breaker state — what's tripped, why, and what it estimates it stopped.
@@ -142,6 +156,6 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, "127.0.0.1", () => {
   console.log(`TokenBrake proxy live → http://localhost:${PORT}  (point your AI's base URL here: /openai or /anthropic)`);
   console.log(`  runaway breaker: ${BREAKER_MODE.toUpperCase()}  ·  state: http://localhost:${PORT}/breaker  ·  TB_BREAKER=watch to observe only, =off to disable`);
-  console.log("  free for individuals and companies under 100 people. A Northjule product.");
-  console.log("  more free tools: https://northjule.com   ·   watch AI agents build live: https://wrenchyard.com");
+  console.log(`  ${LICENSE.line}`);
+  console.log("  A Northjule product · https://tokenbrake.com");
 });
