@@ -112,7 +112,7 @@ node set-budget.mjs research-bot 50 soft</pre>
   <h3>What it looks for</h3>
   <table>
     <tr><th>Reason</th><th>What triggers it</th></tr>
-    <tr><td><code>loop</code></td><td>≥80% of a 60-second window is the same request <em>and</em> ≥20 calls/min. Both, or it isn't a loop.</td></tr>
+    <tr><td><code>loop</code></td><td>≥80% of a rolling window (up to 60 seconds, minimum 12 calls) is the same request <em>and</em> the rate is ≥20 calls/min. Both, or it isn't a loop — so 12 identical calls in 10 seconds trips it, and a busy hour of varied ones never does.</td></tr>
     <tr><td><code>burn</code></td><td>Spend passes $5.00/minute, whatever the pattern.</td></tr>
     <tr><td><code>error_storm</code></td><td>≥50% of calls failing at ≥15 calls/min — a retry storm.</td></tr>
     <tr><td><code>surge</code></td><td>≥8× this agent's own learned baseline rate, and at least 30 calls/min.</td></tr>
@@ -184,7 +184,7 @@ client = OpenAI(
   </table>
 
   <h2 id="license">8. Licence &amp; lost keys</h2>
-  <p>TokenBrake is <strong>source-available</strong>, under <a href="https://polyformproject.org/licenses/small-business/1.0.0/">PolyForm Small Business 1.0.0</a>. It's free to use — including at work — for individuals and for any company under 100 people and under $1M revenue. That covers almost everyone, and nothing is held back in the free version: no trial clock, no locked features, no key to enter.</p>
+  <p>TokenBrake is <strong>source-available</strong>, under <a href="https://polyformproject.org/licenses/small-business/1.0.0">PolyForm Small Business 1.0.0</a>. It's free to use — including at work — for individuals and for any company under 100 people and under $1M revenue. That covers almost everyone, and nothing is held back in the free version: no trial clock, no locked features, no key to enter.</p>
   <p>Companies above that threshold buy <strong>one commercial licence, once</strong> — $249, one company, unlimited machines and agents, no renewal. <a href="/pricing">Pricing</a> has the details.</p>
   <h3>Redeeming a purchase</h3>
   <p>Buy on Gumroad, and you'll get a licence key on the receipt and by email. Paste it at <a href="/get">tokenbrake.com/get</a> and you'll get your TokenBrake key straight back. Set it as <code>TB_LICENSE</code> and restart:</p>

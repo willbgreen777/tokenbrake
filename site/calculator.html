@@ -83,7 +83,7 @@
     &nbsp; <a class="btn ghost" href="/docs">See how it works</a>
   </div>
 
-  <div class="note">Estimates use current published per-token rates (standard tier, short context) for each provider and are for guidance only — your invoice is the source of truth. Prices change; caching, batch, priority tiers, and very large contexts can shift the real cost. TokenBrake meters your actual usage live.</div>
+  <div class="note">Published per-token rates as last checked on <b>15 August 2026</b> (standard tier, short context), for guidance only — your invoice is the source of truth. Prices change constantly; caching, batch and priority tiers, and very large contexts all shift the real cost. TokenBrake meters your actual usage live rather than estimating it.</div>
 
   <div class="foot">
     <a href="/">Home</a><a href="/pricing">Pricing</a><a href="/docs">Docs</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a><br><br>
@@ -92,23 +92,28 @@
 </div>
 
 <script>
-// current published rates, USD per 1M tokens (standard tier, short context)
+// USD per 1M tokens, standard tier, short context. Mirrors lib/pricing.js in the product,
+// which carries a VERIFIED_ON date and a test that fails when it goes stale. Checked 2026-08-15.
 const MODELS = [
-  ["OpenAI · GPT-4o", 2.50, 10.00],
-  ["OpenAI · GPT-4o mini", 0.15, 0.60],
-  ["OpenAI · GPT-4.1", 2.00, 8.00],
-  ["OpenAI · o3", 2.00, 8.00],
-  ["Anthropic · Claude Opus 4", 15.00, 75.00],
-  ["Anthropic · Claude Sonnet 4", 3.00, 15.00],
-  ["Anthropic · Claude 3.5 Haiku", 0.80, 4.00],
-  ["Google · Gemini 2.5 Pro", 1.25, 10.00],
-  ["Google · Gemini 2.5 Flash", 0.30, 2.50],
-  ["Google · Gemini 2.5 Flash-Lite", 0.10, 0.40],
-  ["xAI · Grok 4.5", 2.00, 6.00],
-  ["DeepSeek · V4 Flash", 0.14, 0.28],
-  ["DeepSeek · V4 Pro", 0.435, 0.87],
-  ["Mistral · Large", 2.00, 6.00],
-  ["Groq · Llama 3.3 70B", 0.59, 0.79],
+  ["OpenAI \u00b7 GPT-5.6 Sol", 5.00, 30.00],
+  ["OpenAI \u00b7 GPT-5.6 Terra", 2.00, 12.00],
+  ["OpenAI \u00b7 GPT-5.6 Luna", 0.20, 1.20],
+  ["OpenAI \u00b7 GPT-4o", 2.50, 10.00],
+  ["OpenAI \u00b7 GPT-4o mini", 0.15, 0.60],
+  ["Anthropic \u00b7 Claude Opus 5", 5.00, 25.00],
+  ["Anthropic \u00b7 Claude Sonnet 5", 2.00, 10.00],
+  ["Anthropic \u00b7 Claude Haiku 4.5", 1.00, 5.00],
+  ["Anthropic \u00b7 Claude Sonnet 4.6", 3.00, 15.00],
+  ["Google \u00b7 Gemini 3.7 Flash", 0.75, 3.75],
+  ["Google \u00b7 Gemini 3.1 Pro", 2.00, 12.00],
+  ["Google \u00b7 Gemini 2.5 Flash", 0.30, 2.50],
+  ["Google \u00b7 Gemini 2.5 Flash-Lite", 0.10, 0.40],
+  ["xAI \u00b7 Grok 4.6", 2.00, 6.00],
+  ["DeepSeek \u00b7 V4 Flash", 0.14, 0.28],
+  ["DeepSeek \u00b7 V4 Pro", 0.435, 0.87],
+  ["Mistral \u00b7 Large", 0.50, 1.50],
+  ["Mistral \u00b7 Medium 3.5", 1.50, 7.50],
+  ["Groq \u00b7 gpt-oss-120b", 0.15, 0.60],
 ];
 const money = n => n >= 1000 ? "$" + Math.round(n).toLocaleString() : (n >= 1 ? "$" + n.toFixed(2) : "$" + n.toFixed(3));
 const sel = document.getElementById("model");
@@ -126,10 +131,10 @@ function calc() {
   document.getElementById("perDay").textContent = money(perDay);
   document.getElementById("perMonth").textContent = money(perMonth);
   document.getElementById("rate").textContent = `${m[0]} · $${m[1]}/1M in · $${m[2]}/1M out · ${money(perReq)} per request`;
-  const shock = perDay * 20 * 3;   // 20× for 3 days
+  const shock = perDay * 19 * 3;   // 3 days at 20x is 19x EXTRA on top of the baseline you would have paid anyway
   document.getElementById("shock").textContent = money(shock);
   document.getElementById("shockLine").textContent = perMonth > 0
-    ? `That's ${(shock / perMonth).toFixed(1)}× your normal monthly bill — landed in 3 days, before the invoice arrives.`
+    ? `That's about ${(shock / perDay).toFixed(0)} normal days of spend, landing in 3 — before any invoice arrives.`
     : "That lands on your card before the invoice arrives.";
 }
 calc();

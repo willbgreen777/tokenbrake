@@ -67,7 +67,7 @@
 
   <nav class="nav">
     <div class="logo">TOKEN<b>BRAKE</b></div>
-    <div style="display:flex;gap:14px;align-items:center"><a href="/guides">Guides</a><a href="/calculator">Calculator</a><a href="https://github.com/willbgreen777/tokenbrake">GitHub</a><a class="btn ghost" href="/get">Get it free</a></div>
+    <div style="display:flex;gap:14px;align-items:center"><a href="/docs">Docs</a><a href="/pricing">Pricing</a><a href="/guides">Guides</a><a href="https://github.com/willbgreen777/tokenbrake">GitHub</a><a class="btn ghost" href="/get">Get it free</a></div>
   </nav>
 
   <header class="hero">
@@ -78,7 +78,7 @@
       <a class="btn" href="/get">Get TokenBrake — free</a>
       <a class="btn ghost" href="#how">See how it works</a>
     </div>
-    <div class="note">Runs entirely on your Mac. Never stores your API keys or your prompts.</div>
+    <div class="note">Runs entirely on your own machine — anywhere Node 24+ runs. Never stores your API keys or your prompts.</div>
 
     <div class="mock" aria-label="menu bar widget preview">
       <div class="bar"><span>🔥 $18.40</span></div>
@@ -134,7 +134,7 @@
     <h2>Two hidden costs. One place no one's ever shown them.</h2>
     <p class="lead">There are two kinds of AI cost, and no tool on earth puts both in front of you.</p>
     <div class="two">
-      <div class="card"><div class="tag" style="color:var(--teal)">☁️ Cloud</div><h3>Dollar-burners</h3><p>GPT, Claude, Grok, Groq, DeepSeek, Mistral — billed per token. A runaway loop or a leaked key turns a $10 month into a $2,000 one overnight. TokenBrake meters them all live and can stop them cold at your budget.</p></div>
+      <div class="card"><div class="tag" style="color:var(--teal)">☁️ Cloud</div><h3>Dollar-burners</h3><p>GPT, Claude, Gemini, Grok, Groq, DeepSeek, Mistral and OpenRouter — billed per token. A runaway loop or a leaked key turns a $10 month into a $2,000 one overnight. TokenBrake meters them all live and can stop them cold at your budget.</p></div>
       <div class="card"><div class="tag" style="color:var(--amber)">⚡ Local</div><h3>Watt-burners</h3><p>Ollama and other local models cost $0 in API — but real electricity, RAM, and disk, quietly, 24/7. TokenBrake reads your machine and shows you the number nobody else measures.</p></div>
     </div>
   </section>
@@ -143,7 +143,7 @@
     <h2>The part that pays for itself</h2>
     <p class="lead">Set a budget. Pick a mode. That's the whole product.</p>
     <div class="two">
-      <div class="card"><h3>🛑 Hard cap</h3><p>The circuit breaker. Hit your budget and the next call is stopped with a clear message — not a surprise invoice. A $10/mo tool that saves you from one $200 bill has already paid for a year.</p></div>
+      <div class="card"><h3>🛑 Hard cap</h3><p>The circuit breaker. Hit your budget and the next call is stopped with a clear message — not a surprise invoice. Free for almost everyone; $249 once for a company over the threshold.</p></div>
       <div class="card"><h3>🔔 Soft cap</h3><p>For when the spend is a profit center and you <i>want</i> to run over. TokenBrake just warns you and keeps going — you always know exactly where you stand, and you stay in control.</p></div>
     </div>
   </section>
@@ -156,7 +156,7 @@
       <div class="step"><div class="n">3</div><p><b>Set a budget.</b> <code>set-budget openai 20 hard</code> and you're protected. Live spend shows in your menu bar; a runaway bill gets stopped before it lands.</p></div>
     </div>
     <div style="margin-top:22px" class="cta-row"><a class="btn" href="/get">Get TokenBrake — free →</a></div>
-    <div class="note">Everything unlocked — no card, no account, no trial clock. Free for individuals and companies under 100 people.</div>
+    <div class="note">Everything unlocked — no card, no account, no trial clock. Free for individuals, and for companies under 100 people <b>and</b> under $1M revenue.</div>
   </section>
 
   <section>
@@ -164,7 +164,7 @@
     <p class="lead">No plans, no trial clock, no per-seat maths. The full safety brake — unlimited agents, every cap, all of it — is free for individuals and for any company under 100 people and under $1M revenue. Companies above that buy one licence, once.</p>
     <div class="two">
       <div class="card"><h3>💸 Why free for you?</h3><p>Because a solo developer capping a $40 bill and a company running twenty agents burning thousands are not the same customer, and only one has a budget. The people who can't afford it don't pay. The people it saves thousands pay $249, once, forever.</p></div>
-      <div class="card"><h3>📄 Source-available, not open source</h3><p>The code is public and readable — read every line before you run it in front of your production traffic. The licence is <a href="https://polyformproject.org/licenses/small-business/1.0.0/" style="color:var(--teal)">PolyForm Small Business</a> rather than MIT. We say so plainly rather than <a href="/faq" style="color:var(--teal)">burying it</a>.</p></div>
+      <div class="card"><h3>📄 Source-available, not open source</h3><p>The code is public and readable — read every line before you run it in front of your production traffic. The licence is <a href="https://polyformproject.org/licenses/small-business/1.0.0" style="color:var(--teal)">PolyForm Small Business</a>, not MIT. It <i>was</i> MIT for two weeks in July 2026, and changed before anyone had adopted it — that MIT release stays MIT forever and we can't revoke it. <code>LICENSE-HISTORY.md</code> in the download says so plainly, and so does this sentence.</p></div>
     </div>
     <div style="margin-top:20px" class="cta-row"><a class="btn" href="/get">Get TokenBrake — free →</a><a class="btn ghost" href="https://github.com/willbgreen777/tokenbrake">View source on GitHub</a></div>
     <p class="note" style="margin-top:14px"><b>What counts as an "agent"?</b> One labeled stream of AI usage you route through TokenBrake — a bot, a script, a project. There's no limit now — monitor as many as you like.</p>
@@ -174,7 +174,8 @@
     <h2>What TokenBrake can and can't see</h2>
     <p class="lead">We're a meter your AI traffic passes through — so we're honest about the line.</p>
     <div class="trust">
-      <div>✅ <b>Any device, any language.</b> Laptop, server, or <b>phone</b> — if an app or agent lets you set its API base URL, TokenBrake meters and caps it.</div>
+      <div>✅ <b>Any language, any framework.</b> If your app or agent lets you set its API base URL, TokenBrake meters and caps it — Python, Node, Go, a shell script, anything.</div>
+      <div>🏠 <b>The machine it runs on.</b> The proxy binds <code>127.0.0.1</code>, so it meters what runs on that box. That is a security decision, not an oversight: there is no auth to misconfigure and nothing exposed to your network. Run one per machine.</div>
       <div>✅ <b>Your own apps &amp; agents.</b> Anything you or your team built on the OpenAI or Anthropic API routes through us in one line.</div>
       <div>🚫 <b>Not consumer apps.</b> The ChatGPT or Claude phone/desktop apps bill through the vendor and can't be proxied — by us or anyone. That usage stays invisible to TokenBrake.</div>
       <div>🚫 <b>Not a spy tool.</b> We only see traffic you deliberately point at us. We don't watch a device.</div>
@@ -188,15 +189,15 @@
     <div class="trust">
       <div>🔒 <b>Never stores your keys.</b> Your API key passes straight through to the real provider and is gone.</div>
       <div>🙈 <b>Never stores your prompts.</b> We keep token counts and dollars — never your content.</div>
-      <div>🏠 <b>Runs on your machine.</b> No cloud account. Your numbers live on your Mac.</div>
-      <div>🛡️ <b>Over-counts, never under.</b> When unsure of a price, we round up — so a bill can't slip past the cap.</div>
+      <div>🏠 <b>Runs on your machine.</b> No cloud account, no phone-home. Your numbers stay on the box it runs on. The menu-bar widget is macOS; the proxy and the breaker run anywhere Node does.</div>
+      <div>🛡️ <b>Rounds up when unsure.</b> An unrecognised model bills at the highest rate we know, never a comfortable guess. The one exception, and we'd rather say it here: very large-context calls <i>under</i>-estimate, because several providers roughly double past a context threshold and our table holds one rate per model. <a href="/docs#providers" style="color:var(--teal)">The detail is in the docs.</a></div>
     </div>
     <p class="note" style="margin-top:18px">TokenBrake is a safety tool, not a warranty — it dramatically reduces bill-shock, it doesn't promise a bill can never exceed a budget.</p>
   </section>
 
 </div>
 <footer>TokenBrake — a free circuit breaker for your AI bill · a Northjule project<br><br>
-<a href="/guides">Guides</a> · <a href="/calculator">Cost calculator</a> · <a href="https://github.com/willbgreen777/tokenbrake">GitHub</a> · <a href="/docs">Docs</a> · <a href="/faq">FAQ</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a><br><br>
+<a href="/docs">Docs</a> · <a href="/pricing">Pricing</a> · <a href="/faq">FAQ</a> · <a href="/guides">Guides</a> · <a href="/calculator">Cost calculator</a> · <a href="https://github.com/willbgreen777/tokenbrake">GitHub</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a><br><br>
 Made by <a href="https://northjule.com" style="color:var(--teal)">Northjule</a></footer>
 </body>
 </html>

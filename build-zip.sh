@@ -86,7 +86,13 @@ echo "$DEMO" | grep -q '3.60'   || fail "demo no longer prints \$3.60 — the si
 echo "  ✓ demo reproduces the figures the site advertises"
 
 # 6. THE ONE THAT MATTERS — does the packaged proxy actually boot and serve?
-PORT=8799
+# Pick a port nothing is listening on. A leftover proxy from a previous run would otherwise
+# fail the build for a reason that has nothing to do with the artefact.
+PORT=""
+for p in $(seq 8790 8840); do
+  if ! nc -z 127.0.0.1 "$p" >/dev/null 2>&1; then PORT="$p"; break; fi
+done
+[ -n "$PORT" ] || fail "could not find a free port between 8790 and 8840 to boot-test on"
 ( cd "$V/TokenBrake" && TB_PORT=$PORT node proxy.mjs > "$V/boot.log" 2>&1 ) &
 BOOTPID=$!
 for _ in $(seq 1 25); do
